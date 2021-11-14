@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                         width: 550,
                         height: 150,
                         child: Padding(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                               left: 25, bottom: 20, top: 20),
                           child: TextFormField(
                             controller: _controller,
@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                                     .colorScheme
                                     .onSecondary),
                             decoration: InputDecoration(
-                              icon: Icon(Icons.person),
+                              icon: const Icon(Icons.person),
                               labelText: 'Numero de Control',
                               labelStyle: Theme.of(context)
                                   .textTheme
@@ -163,13 +163,13 @@ class _HomePageState extends State<HomePage> {
                         ),
                         decoration:  BoxDecoration(
                           color: Theme.of(context).colorScheme.primary,
-                          borderRadius: BorderRadius.all(
+                          borderRadius: const BorderRadius.all(
                               Radius.circular(10) //                 <--- border radius here
                           ),
                         ),
 
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                         height: 10,
                       ),
@@ -178,7 +178,7 @@ class _HomePageState extends State<HomePage> {
                           ElevatedButton(
                             onPressed: () {
                             },
-                            child: Text('Aceptar'),
+                            child: const Text('Entrada'),
                             style: ElevatedButton.styleFrom(
                                 primary: Theme.of(context).colorScheme.primary,
                                 padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
@@ -186,7 +186,7 @@ class _HomePageState extends State<HomePage> {
 
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                             height: 10,
                           ),
@@ -194,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                             onPressed: () {
 
                             },
-                            child: Text('Borrar'),
+                            child: const Text('Salida'),
                             style: ElevatedButton.styleFrom(
                                 primary: Theme.of(context).colorScheme.primary,
                                 padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),

@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:servicio_social/src/homepage.dart';
+import 'package:servicio_social/src/login.dart';
 
 import 'src/theme/theme.dart';
 void main() {
@@ -49,7 +50,7 @@ class _AppState extends State<App> {
       title: 'Servicio',
       debugShowCheckedModeBanner: false,
       theme: MyTheme.define(),
-      home: HomePage(),
+      home: LoginPage(),
     );
   }
 }
