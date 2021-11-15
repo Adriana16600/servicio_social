@@ -50,7 +50,7 @@ class _AppState extends State<App> {
       title: 'Servicio',
       debugShowCheckedModeBanner: false,
       theme: MyTheme.define(),
-      home: LoginPage(),
+      home: HomePage(),
     );
   }
 }
