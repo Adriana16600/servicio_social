@@ -1,6 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:servicio_social/src/homepage.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key}) : super(key: key);
@@ -12,6 +14,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+
     FirebaseAuth auth = FirebaseAuth.instance;
     bool passwordVisibility = true;
 
@@ -20,27 +23,43 @@ class _LoginPageState extends State<LoginPage> {
     final TextEditingController _passwordController = TextEditingController();
 
 
-    return Scaffold(
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
 
-          Container(
-          alignment: Alignment.center,
-            child: Column(
+    return Scaffold(
+      body:  Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+
+            Container(
+              alignment: Alignment.center,
+              child: Image(
+                image: NetworkImage(
+                    'http://www.huatabampo.tecnm.mx/wp-content/uploads/2019/09/TecNM-logo-216x300.png'),
+                height: 500,
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+
+            Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.person, size: 200,),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
+                  child:
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          Icon(Icons.person, size: 100,),
                           Text('Administrador',
                               style: Theme.of(context)
                                   .textTheme
@@ -51,61 +70,53 @@ class _LoginPageState extends State<LoginPage> {
                                       .onSurface)),
                         ],
                       ),
-                    ],
-                  ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(left: 20, bottom: 10, top: 10),
-                  child: TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Correo',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      prefixIcon: Icon(
-                        Icons.alternate_email_rounded,
+                Container(
+                  alignment: Alignment.center,
+                  width: 500,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        labelText: 'Correo',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        prefixIcon: Icon(
+                          Icons.alternate_email_rounded,
+                        ),
                       ),
+                      validator: (String value) {
+                        if (value.isEmpty) return 'Please enter some text';
+                        return null;
+                      },
                     ),
-                    validator: (String value) {
-                      if (value.isEmpty) return 'Please enter some text';
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 20, bottom: 10, top: 10),
-                  child: TextFormField(
-
-                    obscureText: passwordVisibility,
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.lock_rounded,
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            passwordVisibility = !passwordVisibility;
-                          });
-                        },
-                        icon: passwordVisibility
-                            ? Icon(Icons.visibility)
-                            : Icon(Icons.visibility_off),
-                      ),
-                      labelText: 'Contraseña',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                    ),
-                    validator: (String value) {
-                      if (value.isEmpty) return 'Please enter some text';
-                      return null;
-                    },
-
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 20, top: 10),
-                  width: MediaQuery.of(context).size.width,
+                  alignment: Alignment.center,
+                  width: 500,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        labelText: 'Contraseña',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        prefixIcon: Icon(
+                          Icons.alternate_email_rounded,
+                        ),
+                      ),
+                      validator: (String value) {
+                        if (value.isEmpty) return 'Please enter some text';
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 150,
                   child:
                   ElevatedButton(
                     child: Text('Entrar'),
@@ -121,16 +132,13 @@ class _LoginPageState extends State<LoginPage> {
                   ),
 
                 )
-
-
               ],
             ),
-          ),
-        ],
-      )
+          ],
+        ),
+      ),
     );
   }
-
 
   Future<void> singIn(email, password) async {
     try {
@@ -141,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const HomePage(),
+          builder: (context) => HomePage(),
         ),
       );
     } on FirebaseAuthException catch (e) {
@@ -154,5 +162,7 @@ class _LoginPageState extends State<LoginPage> {
     }
 
   }
+
+
 
 }
