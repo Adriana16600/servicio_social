@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'firebase/firebase.dart';
 import 'login.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,6 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    FireBridge fire = new FireBridge();
 
     TextEditingController _controller = TextEditingController();
 
@@ -187,6 +190,21 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           ElevatedButton(
                             onPressed: () {
+                              FirebaseFirestore.instance
+                                  .collection('alumnos')
+                                  .where("nocontrol",
+                                  isEqualTo: _controller.text)
+                                  .get()
+                                  .then((value) {
+                                if (value.docs.isNotEmpty) {
+                                  print('${value.docs[0].id}');
+                                  fire.addfechaentrada(value.docs[0].id);
+                                } else {
+                                  _showMyDialog();
+                                }
+                              });
+
+
                             },
                             child: const Text('Entrada'),
                             style: ElevatedButton.styleFrom(
@@ -224,4 +242,33 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Este usuario no existe'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Aceptar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
