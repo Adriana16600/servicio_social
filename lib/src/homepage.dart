@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'login.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
 
@@ -93,6 +95,14 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(
                         child: ElevatedButton(
                           onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginPage(),
+                              ),
+                            );
+
+
                           },
                           child: Text(
                             'Administrador',
