@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             //padding: EdgeInsets.symmetric(horizontal: 30),
             alignment: Alignment.center,
-            height: 150,
+            height: 90,
             width: MediaQuery.of(context).size.width,
             color: Theme.of(context).colorScheme.primary,
             child: Row(

@@ -49,7 +49,7 @@ class MyTheme {
       textTheme: TextTheme(
         headline1: GoogleFonts.montserrat(
           color: primary,
-          fontSize: 50,
+          fontSize: 30,
           fontWeight: FontWeight.normal,
         ),
         headline2: GoogleFonts.montserrat(
