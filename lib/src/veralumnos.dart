@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'firebase/firebase.dart';
 
-class DataTableDemo extends StatefulWidget {
+class TablaAlumnos extends StatefulWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -13,13 +13,18 @@ class DataTableDemo extends StatefulWidget {
         padding: const EdgeInsets.all(16),
         children: [
           PaginatedDataTable(
-            header: Text('Header Text'),
+            header: Text('Alumnos registrados en el servicio social'),
             rowsPerPage: 4,
             columns: [
-              DataColumn(label: Text('Header A')),
-              DataColumn(label: Text('Header B')),
-              DataColumn(label: Text('Header C')),
-              DataColumn(label: Text('Header D')),
+              DataColumn(label: Text('Número de control')),
+              DataColumn(label: Text('Nombre')),
+              DataColumn(label: Text('Apellido Paterno')),
+              DataColumn(label: Text('Apellido Materno')),
+              DataColumn(label: Text('Escuela')),
+              DataColumn(label: Text('Carrera')),
+              DataColumn(label: Text('Semestre')),
+              DataColumn(label: Text('Fecha de inicio')),
+
             ],
             source: _DataSource(context),
           ),

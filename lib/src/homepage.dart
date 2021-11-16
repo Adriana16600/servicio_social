@@ -61,6 +61,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(
                         child: ElevatedButton(
+
                           onPressed: () {
                           },
                           child: Text(
@@ -98,6 +99,7 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(
                         child: ElevatedButton(
                           onPressed: () {
+                            //para navegar entre paginas
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
