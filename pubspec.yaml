@@ -47,6 +47,7 @@ dependencies:
   shared_preferences: ^2.0.8
   provider: ^5.0.0
   firebase_database: ^8.1.0
+  excel: ^2.0.0-null-safety
 
 dev_dependencies:
   flutter_test:
