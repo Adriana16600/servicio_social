@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class MyTheme {
   static ThemeData define() {
-    final Color primary = Color(0xFF18396a);
+    final Color primary = Color(0xFF182D56);
     final Color primaryVariant = Color(0xFFb37a2e);
-    final Color secondary = Color(0xFF18396a);
+    final Color secondary = Color(0xFF182D56);
     final Color secondaryVariant = Color(0xFF97a7c2);
 
     final Color surface = Color(0xFFFFFFFF);

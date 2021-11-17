@@ -51,7 +51,7 @@ class _AppState extends State<App> {
       title: 'Servicio',
       debugShowCheckedModeBanner: false,
       theme: MyTheme.define(),
-      home: TablaAlumnos(),
+      home: HomePage(),
     );
   }
 }
