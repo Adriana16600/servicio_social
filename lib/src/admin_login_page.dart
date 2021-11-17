@@ -1,45 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:servicio_social/src/homepage.dart';
+import 'package:servicio_social/src/veralumnos.dart';
+import 'package:servicio_social/src/welcome_page.dart';
 
-
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key key}) : super(key: key);
+class AdminLoginPage extends StatefulWidget {
+  const AdminLoginPage({Key key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _AdminLoginPageState createState() => _AdminLoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _AdminLoginPageState extends State<AdminLoginPage> {
   @override
   Widget build(BuildContext context) {
-
     FirebaseAuth auth = FirebaseAuth.instance;
     bool passwordVisibility = true;
-
 
     final TextEditingController _emailController = TextEditingController();
     final TextEditingController _passwordController = TextEditingController();
 
-
-
     return Scaffold(
-      body:  Container(
+      appBar: AppBar(
+
+        title: Text('Inicia como admin :)'),
+      ),
+      body: Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: (){
-                  Navigator.of(context).pop();
-                },
-              ),
-            ),
-
             Container(
               alignment: Alignment.center,
               child: Image(
@@ -49,27 +39,23 @@ class _LoginPageState extends State<LoginPage> {
                 fit: BoxFit.fitWidth,
               ),
             ),
-
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  child:
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.person, size: 100,),
-                          Text('Administrador',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline3
-                                  .copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurface)),
-                        ],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.account_circle_rounded,
+                        size: 100,
                       ),
+                      Text('Administrador',
+                          style: Theme.of(context).textTheme.headline3.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface)),
+                    ],
+                  ),
                 ),
                 Container(
                   alignment: Alignment.center,
@@ -79,11 +65,11 @@ class _LoginPageState extends State<LoginPage> {
                     child: TextFormField(
                       controller: _emailController,
                       decoration: InputDecoration(
-                        labelText: 'Correo',
+                        labelText: 'Numero de control',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10)),
                         prefixIcon: Icon(
-                          Icons.alternate_email_rounded,
+                          Icons.person_rounded,
                         ),
                       ),
                       validator: (String value) {
@@ -100,12 +86,13 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       controller: _passwordController,
+                      obscureText: true,
                       decoration: InputDecoration(
-                        labelText: 'Contraseña',
+                        labelText: 'Nip',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10)),
-                        prefixIcon: Icon(
-                          Icons.alternate_email_rounded,
+                        prefixIcon: const Icon(
+                          Icons.password_rounded,
                         ),
                       ),
                       validator: (String value) {
@@ -117,11 +104,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Container(
                   width: 150,
-                  child:
-                  ElevatedButton(
+                  child: ElevatedButton(
                     child: Text('Entrar'),
                     onPressed: () {
-                      singIn(_emailController.text, _passwordController.text);
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => TablaAlumnos(),));
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 20),
@@ -130,7 +116,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-
                 )
               ],
             ),
@@ -142,10 +127,8 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> singIn(email, password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email,
-          password: password
-      );
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -156,13 +139,8 @@ class _LoginPageState extends State<LoginPage> {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
-
         print('Wrong password provided for that user.');
       }
     }
-
   }
-
-
-
 }
