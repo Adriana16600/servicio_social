@@ -13,12 +13,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String control = '';
+
   @override
   Widget build(BuildContext context) {
-    FireBridge fire = new FireBridge();
-
-    TextEditingController _controller = TextEditingController();
-
     return Scaffold(
       body: Column(
         children: [
@@ -48,9 +46,12 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     children: [
                       TextFormField(
-                        controller: _controller,
-                        style: Theme.of(context).textTheme.headline1.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface),
+                        // controller: _controller,
+                        onChanged: (value) {
+                          setState(() {
+                            control = value;
+                          });
+                        },
                         decoration: InputDecoration(
                           icon: const Icon(Icons.person),
                           labelText: 'Numero de Control',
@@ -75,13 +76,26 @@ class _HomePageState extends State<HomePage> {
                               },
                               child: Text('Entrar como administrador')),
                           ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => StudentPage(),
-                                  ));
-                            },
+                            onPressed: control != ''
+                                ? () {
+                                    FirebaseFirestore.instance
+                                        .collection('alumnos')
+                                        .where('nocontrol', isEqualTo: control)
+                                        .get()
+                                        .then((value) {
+                                      print('$value');
+                                      if (value.docs.isNotEmpty) {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => StudentPage(
+                                                alumno: value.docs[0],
+                                              ),
+                                            ));
+                                      }
+                                    });
+                                  }
+                                : null,
                             child: const Text('Entrar'),
                             style: ElevatedButton.styleFrom(
                                 primary: Theme.of(context).colorScheme.primary,
