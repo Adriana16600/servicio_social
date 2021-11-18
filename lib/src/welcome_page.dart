@@ -92,6 +92,24 @@ class _HomePageState extends State<HomePage> {
                                                 alumno: value.docs[0],
                                               ),
                                             ));
+                                      } else {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              title: Text('Oops'),
+                                              content: Text(
+                                                  'Este usuario no existe'),
+                                              actions: [
+                                                TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('Okay'))
+                                              ],
+                                            );
+                                          },
+                                        );
                                       }
                                     });
                                   }

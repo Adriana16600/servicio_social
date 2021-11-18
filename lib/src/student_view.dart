@@ -41,6 +41,26 @@ class StudentPage extends StatelessWidget {
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) return CircularProgressIndicator();
+            if (snapshot.data.docs.length == 0) {
+              return Center(
+                child: HugeButton(
+                  color: Theme.of(context).colorScheme.primary,
+                  icon: Icons.play_circle_outline_rounded,
+                  text: 'Empezar',
+                  onTap: () {
+                    FirebaseFirestore.instance
+                        .collection('alumnos')
+                        .doc(alumno.id)
+                        .collection('registros')
+                        .doc()
+                        .set({
+                      'activo': true,
+                      'entrada': Timestamp.now(),
+                    });
+                  },
+                ),
+              );
+            }
             if (!(snapshot.data.docs[0]['activo'])) {
               return Center(
                 child: HugeButton(

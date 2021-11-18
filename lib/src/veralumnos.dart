@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TablaAlumnos extends StatefulWidget {
   @override
@@ -53,7 +54,7 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
                         print('Hello $index');
                       },
                       subtitle: Text(
-                          '${snapshot.data.docs[index]['nocontrol']} \n ${snapshot.data.docs[index]['escuela']} \n ${snapshot.data.docs[index]['fechainicio']}'),
+                          '${snapshot.data.docs[index]['nocontrol']} \n ${snapshot.data.docs[index]['escuela']} \n ${date(date: snapshot.data.docs[index]['fechainicio'],format: 'dd  MMMM yyy')}'),
                       title: Text(
                           '${snapshot.data.docs[index]['nombre']} ${snapshot.data.docs[index]['apaterno']} ${snapshot.data.docs[index]['amaterno']}'),
                       trailing: IconButton(
@@ -77,5 +78,8 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
             );
           }),
     );
+  }
+  String date({date, format}) {
+    return DateFormat(format, 'es').format(date.toDate());
   }
 }
