@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'excel.dart';
+
 class HistoryPage extends StatelessWidget {
   final DocumentSnapshot alumno;
 
@@ -12,6 +14,16 @@ class HistoryPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text('Historial de horas'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Export().exportarHistorialAlumno(context, alumno);
+              },
+              icon: Icon(
+                Icons.get_app_rounded,
+              ),
+            ),
+          ],
         ),
         body: StreamBuilder(
             stream: FirebaseFirestore.instance
@@ -24,14 +36,20 @@ class HistoryPage extends StatelessWidget {
               return ListView.builder(
                 itemCount: snapshot.data.docs.length,
                 itemBuilder: (context, index) {
+                  DocumentSnapshot doc = snapshot.data.docs[index];
                   return ListTile(
                     title: Text(
-                        '${DateFormat('dd-MM-yyyy').format(snapshot.data.docs[index]['entrada'].toDate())}'),
-                    subtitle: Text('Entrada: ${DateFormat('hh:mm a').format(snapshot.data.docs[index]['entrada'].toDate())},'
-                        ' Salida ${DateFormat('hh:mm a').format(snapshot.data.docs[index]['salida'].toDate())}'),
+                        '${date(date: doc['entrada'], format: 'EEEE')}, ${date(date: doc['entrada'], format: 'dd')} de ${date(date: doc['entrada'], format: 'MMMM')} del ${date(date: doc['entrada'], format: 'yyyy')}'),
+                    subtitle: Text(
+                        'Entrada: ${date(format: 'hh:mm a', date: doc['entrada'])} - Salida ${date(format: 'hh:mm a', date: doc['salida'])}'),
+                  trailing: Text('Total hrs: ${doc['total_hrs']}'),
                   );
                 },
               );
             }));
+  }
+
+  String date({date, format}) {
+    return DateFormat(format, 'es').format(date.toDate());
   }
 }

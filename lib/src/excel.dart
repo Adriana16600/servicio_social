@@ -1,35 +1,43 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 class Export {
-  exportDevices(BuildContext context) async {
+  exportarHistorialAlumno(BuildContext context, DocumentSnapshot alumno) async {
     Excel excel = Excel.createExcel();
     Sheet sheetObject;
     sheetObject = excel['Sheet1'];
-    List<String> abcs = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-    var titles = [
-      'Nombre', //a
-      'Departamento', //b
-      'Numero', //c
-      'Marca', //d
-      'Disco', //e
-      'RAM', //f
-      'Modelo', //g
-      'Procesador', //h
+    List<String> abcs = [
+      'a',
+      'b',
+      'c',
+      'd',
     ];
-    for (int i = 0; i < titles.length; i++)
-      sheetObject.cell(CellIndex.indexByString("${abcs[i]}1")).value =
-      titles[i];
+    var titles = [
+      'Dia', //a
+      'Entrada', //b
+      'Salida', //c
+      'Total hrs' //d
+    ];
+    for (int i = 0; i < titles.length; i++) {
+      sheetObject.cell(CellIndex.indexByString("${abcs[i]}2")).value =
+          titles[i];
+    }
 
-    List<DocumentSnapshot> departments = await FirebaseFirestore.instance
-        .collection('departments')
-        .get()
-        .then((value) => value.docs);
+    sheetObject.cell(CellIndex.indexByString("a1")).value = 'nombre';
+    sheetObject.cell(CellIndex.indexByString("b1")).value =
+        '${alumno['nombre']} ${alumno['apaterno']}${alumno['amaterno']}';
+    sheetObject.cell(CellIndex.indexByString("c1")).value = 'control';
+    sheetObject.cell(CellIndex.indexByString("d1")).value = alumno['nocontrol'];
+    sheetObject.cell(CellIndex.indexByString("e1")).value = 'carrera';
+    sheetObject.cell(CellIndex.indexByString("f1")).value = alumno['carrera'];
 
     List<DocumentSnapshot> devices = await FirebaseFirestore.instance
-        .collection('devices')
-        .where('specs_added', isEqualTo: true)
+        .collection('alumnos')
+        .doc(alumno.id)
+        .collection('registros')
+        .orderBy('entrada', descending: true)
         .get()
         .then((value) => value.docs)
         .onError((error, stackTrace) {
@@ -38,32 +46,25 @@ class Export {
     });
 
     for (int i = 0; i < devices.length; i++) {
-      sheetObject.cell(CellIndex.indexByString("A${i + 2}")).value =
-      devices[i]['name'];
-      for (var j = 0; j < departments.length; ++j) {
-        if (departments[j].id == devices[i]['department']) {
-          sheetObject.cell(CellIndex.indexByString("B${i + 2}")).value =
-          '${departments[j]['name']} - ${departments[j]['building']} - ${departments[j]['prefix']}';
-        }
-      }
+      sheetObject.cell(CellIndex.indexByString("A${i + 3}")).value =
+          date(date: devices[i]['entrada'], format: 'dd MMMM yyyy');
+      sheetObject.cell(CellIndex.indexByString("B${i + 3}")).value =
+          date(date: devices[i]['entrada'], format: 'hh:mm a');
+      sheetObject.cell(CellIndex.indexByString("C${i + 3}")).value =
+          date(date: devices[i]['salida'], format: 'hh:mm a');
 
-      sheetObject.cell(CellIndex.indexByString("C${i + 2}")).value =
-      devices[i]['number'];
-      sheetObject.cell(CellIndex.indexByString("D${i + 2}")).value =
-      devices[i]['specs.brand'];
-      sheetObject.cell(CellIndex.indexByString("E${i + 2}")).value =
-      devices[i]['specs.memory'];
-      sheetObject.cell(CellIndex.indexByString("F${i + 2}")).value =
-      devices[i]['specs.ram'];
-      sheetObject.cell(CellIndex.indexByString("G${i + 2}")).value =
-      devices[i]['specs.model'];
-      sheetObject.cell(CellIndex.indexByString("H${i + 2}")).value =
-      devices[i]['specs.processor'];
+      final entrada = devices[i]['entrada'].toDate();
+      final salida = devices[i]['salida'].toDate();
+      final difference = salida.difference(entrada).inHours;
+
+      sheetObject.cell(CellIndex.indexByString("D${i + 3}")).value = difference;
     }
 
-    excel.save(
-        fileName:
-        'reporte.xlsx');
-    Navigator.pop(context);
+    excel.save(fileName: 'reporte.xlsx');
+    // Navigator.pop(context);
+  }
+
+  String date({date, format}) {
+    return DateFormat(format, 'es').format(date.toDate());
   }
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:servicio_social/src/excel.dart';
 
 import 'hours_history.dart';
 
@@ -19,17 +20,13 @@ class StudentPage extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HistoryPage(alumno: alumno,),
+                    builder: (context) => HistoryPage(
+                      alumno: alumno,
+                    ),
                   ));
             },
             icon: Icon(
               Icons.history_rounded,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.get_app_rounded,
             ),
           ),
         ],
@@ -56,7 +53,10 @@ class StudentPage extends StatelessWidget {
                         .doc(alumno.id)
                         .collection('registros')
                         .doc()
-                        .set({'activo': true, 'entrada': Timestamp.now()});
+                        .set({
+                      'activo': true,
+                      'entrada': Timestamp.now(),
+                    });
                   },
                 ),
               );
@@ -67,12 +67,20 @@ class StudentPage extends StatelessWidget {
                   icon: Icons.do_disturb_rounded,
                   text: 'Terminar',
                   onTap: () {
+                    final entrada = snapshot.data.docs[0]['entrada'].toDate();
+                    final salida = Timestamp.now().toDate();
+                    final difference = salida.difference(entrada).inHours;
+
                     FirebaseFirestore.instance
                         .collection('alumnos')
                         .doc(alumno.id)
                         .collection('registros')
                         .doc(snapshot.data.docs[0].id)
-                        .update({'activo': false, 'salida': Timestamp.now()});
+                        .update({
+                      'activo': false,
+                      'total_hrs': difference,
+                      'salida': Timestamp.now(),
+                    });
                   },
                 ),
               );
