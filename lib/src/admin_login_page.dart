@@ -23,7 +23,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
     return Scaffold(
       appBar: AppBar(
 
-        title: Text('Inicia como admin :)'),
+        title: Text('Entrando al modo administrador'),
       ),
       body: Container(
         child: Row(

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:servicio_social/src/registro.dart';
 
 class TablaAlumnos extends StatefulWidget {
   @override
@@ -26,13 +27,17 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => RegistroPage(),));
+            },
+
             icon: Icon(
               Icons.person_add_alt_1_rounded,
             ),
           )
         ],
-        title: Text('Data Tables'),
+        title: Text('Alumnos haciendo servicio social'),
       ),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
@@ -54,9 +59,15 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
                         print('Hello $index');
                       },
                       subtitle: Text(
-                          '${snapshot.data.docs[index]['nocontrol']} \n ${snapshot.data.docs[index]['escuela']} \n ${date(date: snapshot.data.docs[index]['fechainicio'],format: 'dd  MMMM yyy')}'),
+                          '${snapshot.data
+                              .docs[index]['nocontrol']} \n ${snapshot.data
+                              .docs[index]['escuela']} \n ${date(date: snapshot
+                              .data.docs[index]['fechainicio'],
+                              format: 'dd  MMMM yyy')}'),
                       title: Text(
-                          '${snapshot.data.docs[index]['nombre']} ${snapshot.data.docs[index]['apaterno']} ${snapshot.data.docs[index]['amaterno']}'),
+                          '${snapshot.data.docs[index]['nombre']} ${snapshot
+                              .data.docs[index]['apaterno']} ${snapshot.data
+                              .docs[index]['amaterno']}'),
                       trailing: IconButton(
                         onPressed: () {
                           FirebaseFirestore.instance
@@ -79,6 +90,7 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
           }),
     );
   }
+
   String date({date, format}) {
     return DateFormat(format, 'es').format(date.toDate());
   }
