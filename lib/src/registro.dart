@@ -1,3 +1,7 @@
+import 'dart:html';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class RegistroPage extends StatefulWidget {
@@ -17,6 +21,7 @@ class _RegistroPageState extends State<RegistroPage> {
       semestre = '',
       hrstotales = '',
       fechainicio = '';
+  bool activo=true;
 
   @override
   Widget build(BuildContext context) {
@@ -128,33 +133,37 @@ class _RegistroPageState extends State<RegistroPage> {
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                child: TextFormField(
-                  onChanged: (value) {
-                    setState(() {
-                      carrera = value;
-                    });
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Carrera',
-                    border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  child: TextFormField(
+                    onChanged: (value) {
+                      setState(() {
+                        carrera = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Carrera',
+                      border:
+                      OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                child: TextFormField(
-                  onChanged: (value) {
-                    setState(() {
-                      semestre = value;
-                    });
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Semestre',
-                    border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  child: TextFormField(
+                    onChanged: (value) {
+                      setState(() {
+                        semestre = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Semestre',
+                      border:
+                      OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
                   ),
                 ),
               ),
@@ -190,6 +199,31 @@ class _RegistroPageState extends State<RegistroPage> {
               ),
             ),
           ),
+          Expanded(
+            child: Container(
+              width: 60,
+              child: ElevatedButton(
+                child: Text('Agregar'),
+                onPressed: () {
+                  FirebaseFirestore.instance
+                      .collection('alumnos')
+                  .doc()
+                      .set({
+                    'nocontrol':numcontrol, 'nombre':nombre, 'apaterno':apaterno, 'amaterno':amaterno, 'escuela':escuela, 'carrera':carrera,
+                    'semestre':semestre, 'hrstotales':hrstotales, 'fechainicio':Timestamp.now(), 'activo':activo
+                  });
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => RegistroPage(),));
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+            ),
+          )
+
         ],
       ),
     );
