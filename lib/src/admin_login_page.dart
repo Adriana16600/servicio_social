@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:servicio_social/src/veralumnos.dart';
+import 'package:servicio_social/src/admi_page.dart';
 import 'package:servicio_social/src/welcome_page.dart';
 
 class AdminLoginPage extends StatefulWidget {
@@ -65,7 +65,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                     child: TextFormField(
                       controller: _emailController,
                       decoration: InputDecoration(
-                        labelText: 'Numero de control',
+                        labelText: 'Usuario',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10)),
                         prefixIcon: Icon(
@@ -96,7 +96,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                         ),
                       ),
                       validator: (String value) {
-                        if (value.isEmpty) return 'Please enter some text';
+                        if (value.isEmpty) return 'LLene los campos';
                         return null;
                       },
                     ),
@@ -137,9 +137,9 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        print('El usuario no existe');
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        print('La contraseña es incorrecta');
       }
     }
   }
