@@ -73,7 +73,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                         ),
                       ),
                       validator: (String value) {
-                        if (value.isEmpty) return 'Please enter some text';
+                        if (value.isEmpty) return 'Inserte un usuario válido';
                         return null;
                       },
                     ),
@@ -96,7 +96,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                         ),
                       ),
                       validator: (String value) {
-                        if (value.isEmpty) return 'LLene los campos';
+                        if (value.isEmpty) return 'Inserte una contraseña';
                         return null;
                       },
                     ),
