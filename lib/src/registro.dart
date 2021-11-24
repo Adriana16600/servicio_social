@@ -20,7 +20,18 @@ class _RegistroPageState extends State<RegistroPage> {
       carrera = '',
       semestre = '',
       hrstotales = '',
-      fechainicio = '';
+      telefono = '';
+
+  fechainicio
+
+  =
+
+  '
+
+  '
+
+  ;
+
   bool activo = true;
   static const menuItems = <String>[
     'TECNM',
@@ -29,19 +40,21 @@ class _RegistroPageState extends State<RegistroPage> {
   ];
   final List<DropdownMenuItem<String>> _dropDownMenuItems = menuItems
       .map(
-        (String value) => DropdownMenuItem<String>(
+        (String value) =>
+        DropdownMenuItem<String>(
           value: value,
           child: Text(value),
         ),
-      )
+  )
       .toList();
   final List<PopupMenuItem<String>> _popUpMenuItems = menuItems
       .map(
-        (String value) => PopupMenuItem<String>(
+        (String value) =>
+        PopupMenuItem<String>(
           value: value,
           child: Text(value),
         ),
-      )
+  )
       .toList();
   String _btn1SelectedVal = 'TECNM';
   String _btn2SelectedVal;
@@ -61,7 +74,10 @@ class _RegistroPageState extends State<RegistroPage> {
                 padding: const EdgeInsets.only(top: 20, bottom: 10, left: 20),
                 child: Text(
                   'Llene el formulario para dar de alta a un nuevo alumno',
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .subtitle1,
                 ),
               )
             ],
@@ -205,7 +221,22 @@ class _RegistroPageState extends State<RegistroPage> {
               decoration: InputDecoration(
                 labelText: 'Horas a realizar',
                 border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            child: TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  telefono = value;
+                });
+              },
+              decoration: InputDecoration(
+                labelText: 'Teléfono',
+                border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
               ),
             ),
           ),
@@ -220,7 +251,7 @@ class _RegistroPageState extends State<RegistroPage> {
               decoration: InputDecoration(
                 labelText: 'Fecha de inicio',
                 border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
               ),
             ),
           ),
