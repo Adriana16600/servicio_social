@@ -21,7 +21,31 @@ class _RegistroPageState extends State<RegistroPage> {
       semestre = '',
       hrstotales = '',
       fechainicio = '';
-  bool activo=true;
+  bool activo = true;
+  static const menuItems = <String>[
+    'TECNM',
+    'CONALEP',
+    'CBTIS 81',
+  ];
+  final List<DropdownMenuItem<String>> _dropDownMenuItems = menuItems
+      .map(
+        (String value) => DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        ),
+      )
+      .toList();
+  final List<PopupMenuItem<String>> _popUpMenuItems = menuItems
+      .map(
+        (String value) => PopupMenuItem<String>(
+          value: value,
+          child: Text(value),
+        ),
+      )
+      .toList();
+  String _btn1SelectedVal = 'TECNM';
+  String _btn2SelectedVal;
+  String _btn3SelectedVal;
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +77,8 @@ class _RegistroPageState extends State<RegistroPage> {
                 },
                 decoration: InputDecoration(
                   labelText: 'Número de control',
-                  border:
-                      OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
                 ),
               ),
             ),
@@ -72,8 +96,8 @@ class _RegistroPageState extends State<RegistroPage> {
                     },
                     decoration: InputDecoration(
                       labelText: 'Nombre',
-                      border:
-                      OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
                     ),
                   ),
                 ),
@@ -89,8 +113,8 @@ class _RegistroPageState extends State<RegistroPage> {
                     },
                     decoration: InputDecoration(
                       labelText: 'Apellido Paterno',
-                      border:
-                      OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
                     ),
                   ),
                 ),
@@ -106,8 +130,8 @@ class _RegistroPageState extends State<RegistroPage> {
                     },
                     decoration: InputDecoration(
                       labelText: 'Apellido Materno',
-                      border:
-                      OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
                     ),
                   ),
                 ),
@@ -119,16 +143,17 @@ class _RegistroPageState extends State<RegistroPage> {
               Expanded(
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                  child: TextFormField(
-                    onChanged: (value) {
-                      setState(() {
-                        escuela = value;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Escuela',
-                      border:
-                          OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  child: ListTile(
+                    title: const Text('Elegir escuela'),
+                    trailing: DropdownButton(
+                      value: _btn2SelectedVal,
+                      hint: const Text('Escuela'),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          _btn2SelectedVal = newValue;
+                        });
+                      },
+                      items: _dropDownMenuItems,
                     ),
                   ),
                 ),
@@ -144,8 +169,8 @@ class _RegistroPageState extends State<RegistroPage> {
                     },
                     decoration: InputDecoration(
                       labelText: 'Carrera',
-                      border:
-                      OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
                     ),
                   ),
                 ),
@@ -161,8 +186,8 @@ class _RegistroPageState extends State<RegistroPage> {
                     },
                     decoration: InputDecoration(
                       labelText: 'Semestre',
-                      border:
-                      OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
                     ),
                   ),
                 ),
@@ -205,14 +230,23 @@ class _RegistroPageState extends State<RegistroPage> {
               child: ElevatedButton(
                 child: Text('Agregar'),
                 onPressed: () {
-                  FirebaseFirestore.instance
-                      .collection('alumnos')
-                  .doc()
-                      .set({
-                    'nocontrol':numcontrol, 'nombre':nombre, 'apaterno':apaterno, 'amaterno':amaterno, 'escuela':escuela, 'carrera':carrera,
-                    'semestre':semestre, 'hrstotales':hrstotales, 'fechainicio':Timestamp.now(), 'activo':activo
+                  FirebaseFirestore.instance.collection('alumnos').doc().set({
+                    'nocontrol': numcontrol,
+                    'nombre': nombre,
+                    'apaterno': apaterno,
+                    'amaterno': amaterno,
+                    'escuela': escuela,
+                    'carrera': carrera,
+                    'semestre': semestre,
+                    'hrstotales': hrstotales,
+                    'fechainicio': Timestamp.now(),
+                    'activo': activo
                   });
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => RegistroPage(),));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegistroPage(),
+                      ));
                 },
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(vertical: 20),
@@ -223,7 +257,6 @@ class _RegistroPageState extends State<RegistroPage> {
               ),
             ),
           )
-
         ],
       ),
     );

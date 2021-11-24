@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                         },
                         decoration: InputDecoration(
                           icon: const Icon(Icons.person),
-                          labelText: 'Numero de Control',
+                          labelText: 'Número de Control',
                           labelStyle: Theme.of(context).textTheme.headline6,
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                                           context: context,
                                           builder: (context) {
                                             return AlertDialog(
-                                              title: Text('Oops'),
+                                              title: Text('Advertencia'),
                                               content: Text(
                                                   'Este usuario no existe'),
                                               actions: [

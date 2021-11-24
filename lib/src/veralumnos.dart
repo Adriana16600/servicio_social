@@ -23,17 +23,43 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
               });
             },
             icon: Icon(
-              Archivados ? Icons.archive_rounded : Icons.reorder_rounded,
+              Archivados ? Icons.archive_rounded : Icons.people,
             ),
           ),
           IconButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => RegistroPage(),));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RegistroPage(),
+                  ));
             },
-
             icon: Icon(
               Icons.person_add_alt_1_rounded,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BackupPage(),
+                  ));
+            },
+            icon: Icon(
+              Icons.cloud_upload,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ReportesPage(),
+                  ));
+            },
+            icon: Icon(
+              Icons.description,
             ),
           )
         ],
@@ -59,15 +85,9 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
                         print('Hello $index');
                       },
                       subtitle: Text(
-                          '${snapshot.data
-                              .docs[index]['nocontrol']} \n ${snapshot.data
-                              .docs[index]['escuela']} \n ${date(date: snapshot
-                              .data.docs[index]['fechainicio'],
-                              format: 'dd  MMMM yyy')}'),
+                          '${snapshot.data.docs[index]['nocontrol']} \n ${snapshot.data.docs[index]['escuela']} \n ${date(date: snapshot.data.docs[index]['fechainicio'], format: 'dd  MMMM yyy')}'),
                       title: Text(
-                          '${snapshot.data.docs[index]['nombre']} ${snapshot
-                              .data.docs[index]['apaterno']} ${snapshot.data
-                              .docs[index]['amaterno']}'),
+                          '${snapshot.data.docs[index]['nombre']} ${snapshot.data.docs[index]['apaterno']} ${snapshot.data.docs[index]['amaterno']}'),
                       trailing: IconButton(
                         onPressed: () {
                           FirebaseFirestore.instance
