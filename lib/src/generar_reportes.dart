@@ -6,7 +6,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 class ReportesPage extends StatefulWidget {
-  const ReportesPage({Key? key}) : super(key: key);
+  const ReportesPage({Key key}) : super(key: key);
 
   @override
   _ReportesPageState createState() => _ReportesPageState();
