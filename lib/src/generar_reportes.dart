@@ -34,19 +34,29 @@ class _ReportesPageState extends State<ReportesPage> {
           ),
         ],
       ),
-      body: Container(
-        child: HugeButton(
-            color: Theme.of(context).colorScheme.primary,
-            icon: Icons.import_contacts,
-            text: 'Carta de aceptación',
-            onTap: () {}
-        ),
-        child: HugeButton(
-            color: Theme.of(context).colorScheme.primary,
-            icon: Icons.menu_book,
-            text: 'Carta de terminación',
-            onTap: () {}
-        ),
+      body: Row(
+        children: [
+          HugeButton(
+              color: Theme.of(context).colorScheme.primary,
+              icon: Icons.import_contacts,
+              text: 'Carta de aceptación',
+              onTap: () {
+                final pdf = pw.Document();
+
+                pdf.addPage(pw.Page(
+                    pageFormat: PdfPageFormat.a4,
+                    build: (pw.Context context) {
+                      return pw.Center(
+                        child: pw.Text("Carta aceptación"),
+                      ); // Center
+                    })); // Page
+              }),
+          HugeButton(
+              color: Theme.of(context).colorScheme.primary,
+              icon: Icons.menu_book,
+              text: 'Carta de terminación',
+              onTap: () {})
+        ],
       ),
     );
   }

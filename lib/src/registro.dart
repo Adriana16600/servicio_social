@@ -20,23 +20,15 @@ class _RegistroPageState extends State<RegistroPage> {
       carrera = '',
       semestre = '',
       hrstotales = '',
-      telefono = '';
-
-  fechainicio
-
-  =
-
-  '
-
-  '
-
-  ;
+      telefono = '',
+      fechainicio ='';
 
   bool activo = true;
   static const menuItems = <String>[
     'TECNM',
     'CONALEP',
     'CBTIS 81',
+    'COBACH',
   ];
   final List<DropdownMenuItem<String>> _dropDownMenuItems = menuItems
       .map(
