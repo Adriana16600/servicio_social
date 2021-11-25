@@ -69,22 +69,26 @@ class _RegistroPageState extends State<RegistroPage> {
               )
             ],
           ),
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              child: TextFormField(
-                onChanged: (value) {
-                  setState(() {
-                    numcontrol = value;
-                  });
-                },
-                decoration: InputDecoration(
-                  labelText: 'Número de control',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  child: TextFormField(
+                    onChanged: (value) {
+                      setState(() {
+                        numcontrol = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Número de control',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
           Row(
             children: [
