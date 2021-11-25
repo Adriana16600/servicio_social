@@ -152,13 +152,14 @@ class _RegistroPageState extends State<RegistroPage> {
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: ListTile(
-                    title: const Text('Elegir escuela'),
+                    title: const Text('Escuela'),
                     trailing: DropdownButton(
                       value: _btn2SelectedVal,
                       hint: const Text('Escuela'),
                       onChanged: (String newValue) {
                         setState(() {
                           _btn2SelectedVal = newValue;
+                          fechainicio=_btn2SelectedVal;
                         });
                       },
                       items: _dropDownMenuItems,
@@ -233,17 +234,23 @@ class _RegistroPageState extends State<RegistroPage> {
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: TextFormField(
-              onChanged: (value) {
-                setState(() {
-                  fechainicio = value;
-                });
+            width: 150,
+            child: ElevatedButton(
+              child: Text('Elegir fecha de inicio'),
+              onPressed: () async {
+                final DateTime newDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime(2021, 12, 1),
+                  firstDate: DateTime(2020, 1),
+                  lastDate: DateTime(2030, 7),
+                  helpText: 'Fecha de inicio',
+                );
               },
-              decoration: InputDecoration(
-                labelText: 'Fecha de inicio',
-                border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
             ),
           ),

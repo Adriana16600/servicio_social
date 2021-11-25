@@ -46,7 +46,7 @@ class StudentPage extends StatelessWidget {
                 child: HugeButton(
                   color: Theme.of(context).colorScheme.primary,
                   icon: Icons.play_circle_outline_rounded,
-                  text: 'Empezar',
+                  text: 'CLICK EN EL BOTÓN PARA REGISTRAR SU HORA DE ENTRADA',
                   onTap: () {
                     FirebaseFirestore.instance
                         .collection('alumnos')
@@ -66,7 +66,7 @@ class StudentPage extends StatelessWidget {
                 child: HugeButton(
                   color: Theme.of(context).colorScheme.primary,
                   icon: Icons.play_circle_outline_rounded,
-                  text: 'Empezar',
+                  text: 'CLICK EN EL BOTÓN PARA REGISTRAR SU HORA DE ENTRADA',
                   onTap: () {
                     FirebaseFirestore.instance
                         .collection('alumnos')
@@ -85,7 +85,7 @@ class StudentPage extends StatelessWidget {
                 child: HugeButton(
                   color: Theme.of(context).colorScheme.error,
                   icon: Icons.do_disturb_rounded,
-                  text: 'Terminar',
+                  text: 'CLICK EN EL BOTÓN PARA REGISTRAR SU HORA DE SALIDA',
                   onTap: () {
                     final entrada = snapshot.data.docs[0]['entrada'].toDate();
                     final salida = Timestamp.now().toDate();
