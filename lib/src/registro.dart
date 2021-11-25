@@ -216,6 +216,7 @@ class _RegistroPageState extends State<RegistroPage> {
           Container(
             margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: TextFormField(
+              maxLength: 10,
               onChanged: (value) {
                 setState(() {
                   telefono = value;
@@ -272,11 +273,7 @@ class _RegistroPageState extends State<RegistroPage> {
                   'fechainicio': fechainicio,
                   'activo': activo
                 });
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => RegistroPage(),
-                    ));
+                Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(vertical: 20),
