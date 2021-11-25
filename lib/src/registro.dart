@@ -159,7 +159,7 @@ class _RegistroPageState extends State<RegistroPage> {
                       onChanged: (String newValue) {
                         setState(() {
                           _btn2SelectedVal = newValue;
-                          fechainicio = _btn2SelectedVal;
+                          escuela = newValue;
                         });
                       },
                       items: _dropDownMenuItems,
@@ -244,7 +244,13 @@ class _RegistroPageState extends State<RegistroPage> {
                   firstDate: DateTime(2020, 1),
                   lastDate: DateTime(2030, 7),
                   helpText: 'Fecha de inicio',
+
                 );
+                onChanged: (value) {
+                  setState(() {
+                    fechainicio = value;
+                  });
+                };
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(vertical: 20),

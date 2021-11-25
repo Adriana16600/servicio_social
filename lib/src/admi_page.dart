@@ -84,7 +84,7 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
                   children: [
                     ListTile(
                       onTap: () {
-                        print('Hello $index');
+                        print('Hola $index');
                       },
                       subtitle: Text(
                           '${snapshot.data.docs[index]['nocontrol']} \n ${snapshot.data.docs[index]['escuela']} \n ${date(date: snapshot.data.docs[index]['fechainicio'], format: 'dd  MMMM yyy')}'),
