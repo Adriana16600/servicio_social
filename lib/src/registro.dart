@@ -159,7 +159,7 @@ class _RegistroPageState extends State<RegistroPage> {
                       onChanged: (String newValue) {
                         setState(() {
                           _btn2SelectedVal = newValue;
-                          fechainicio=_btn2SelectedVal;
+                          fechainicio = _btn2SelectedVal;
                         });
                       },
                       items: _dropDownMenuItems,
