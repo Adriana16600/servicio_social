@@ -20,8 +20,8 @@ class _RegistroPageState extends State<RegistroPage> {
       carrera = '',
       semestre = '',
       hrstotales = '',
-      telefono = '',
-      fechainicio ='';
+      telefono = '';
+  Timestamp fechainicio;
 
   bool activo = true;
   static const menuItems = <String>[
@@ -32,21 +32,19 @@ class _RegistroPageState extends State<RegistroPage> {
   ];
   final List<DropdownMenuItem<String>> _dropDownMenuItems = menuItems
       .map(
-        (String value) =>
-        DropdownMenuItem<String>(
+        (String value) => DropdownMenuItem<String>(
           value: value,
           child: Text(value),
         ),
-  )
+      )
       .toList();
   final List<PopupMenuItem<String>> _popUpMenuItems = menuItems
       .map(
-        (String value) =>
-        PopupMenuItem<String>(
+        (String value) => PopupMenuItem<String>(
           value: value,
           child: Text(value),
         ),
-  )
+      )
       .toList();
   String _btn1SelectedVal = 'TECNM';
   String _btn2SelectedVal;
@@ -66,10 +64,7 @@ class _RegistroPageState extends State<RegistroPage> {
                 padding: const EdgeInsets.only(top: 20, bottom: 10, left: 20),
                 child: Text(
                   'Llene el formulario para dar de alta a un nuevo alumno',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .subtitle1,
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
               )
             ],
@@ -214,7 +209,7 @@ class _RegistroPageState extends State<RegistroPage> {
               decoration: InputDecoration(
                 labelText: 'Horas a realizar',
                 border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
               ),
             ),
           ),
@@ -229,12 +224,13 @@ class _RegistroPageState extends State<RegistroPage> {
               decoration: InputDecoration(
                 labelText: 'Teléfono',
                 border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
               ),
             ),
           ),
           Container(
             width: 150,
+            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             child: ElevatedButton(
               child: Text('Elegir fecha de inicio'),
               onPressed: () async {
@@ -244,13 +240,11 @@ class _RegistroPageState extends State<RegistroPage> {
                   firstDate: DateTime(2020, 1),
                   lastDate: DateTime(2030, 7),
                   helpText: 'Fecha de inicio',
-
                 );
-                onChanged: (value) {
-                  setState(() {
-                    fechainicio = value;
-                  });
-                };
+                setState(() {
+                  fechainicio = Timestamp.fromMillisecondsSinceEpoch(
+                      newDate.millisecondsSinceEpoch);
+                });
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(vertical: 20),
@@ -260,35 +254,34 @@ class _RegistroPageState extends State<RegistroPage> {
               ),
             ),
           ),
-          Expanded(
-            child: Container(
-              width: 60,
-              child: ElevatedButton(
-                child: Text('Agregar'),
-                onPressed: () {
-                  FirebaseFirestore.instance.collection('alumnos').doc().set({
-                    'nocontrol': numcontrol,
-                    'nombre': nombre,
-                    'apaterno': apaterno,
-                    'amaterno': amaterno,
-                    'escuela': escuela,
-                    'carrera': carrera,
-                    'semestre': semestre,
-                    'hrstotales': hrstotales,
-                    'fechainicio': Timestamp.now(),
-                    'activo': activo
-                  });
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RegistroPage(),
-                      ));
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+          Container(
+            width: 60,
+            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            child: ElevatedButton(
+              child: Text('Agregar'),
+              onPressed: () {
+                FirebaseFirestore.instance.collection('alumnos').doc().set({
+                  'nocontrol': numcontrol,
+                  'nombre': nombre,
+                  'apaterno': apaterno,
+                  'amaterno': amaterno,
+                  'escuela': escuela,
+                  'carrera': carrera,
+                  'semestre': semestre,
+                  'hrstotales': hrstotales,
+                  'fechainicio': fechainicio,
+                  'activo': activo
+                });
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RegistroPage(),
+                    ));
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
             ),
