@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:servicio_social/src/admi_page.dart';
@@ -5,6 +7,7 @@ import 'package:servicio_social/src/excel.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import 'dart:html' as html;
 
 class ReportesPage extends StatefulWidget {
   const ReportesPage({Key key}) : super(key: key);
@@ -40,16 +43,27 @@ class _ReportesPageState extends State<ReportesPage> {
               color: Theme.of(context).colorScheme.primary,
               icon: Icons.import_contacts,
               text: 'Carta de aceptación',
-              onTap: () {
+              onTap: () async {
                 final pdf = pw.Document();
+                Uint8List fontData = File('ProximaNova-Black.ttf').readAsBytesSync();
+                var data = fontData.buffer.asByteData();
+                pdf.addPage(
+                  pw.Page(
+                    build: (pw.Context context) => pw.Center(
+                      child: pw.Text('Hello World', style: pw.TextStyle(font: pw.Font.ttf(data),fontSize: 42,fontWeight: pw.FontWeight.bold)),
+                    ),
+                  ),
+                );
+                pdf.save().then((value){
+                  final blob = html.Blob([value], 'application/pdf');
+                  final url = html.Url.createObjectUrlFromBlob(blob);
+                  final anchor = html.document.createElement('a') as html.AnchorElement
+                    ..href = url
+                    ..style.display = 'none'
+                    ..download = 'pdf.pdf';
+                  html.document.body.children.add(anchor);
 
-                pdf.addPage(pw.Page(
-                    pageFormat: PdfPageFormat.a4,
-                    build: (pw.Context context) {
-                      return pw.Center(
-                        child: pw.Text("Carta aceptación"),
-                      ); // Center
-                    })); // Page
+                });
               }),
           HugeButton(
               color: Theme.of(context).colorScheme.primary,
