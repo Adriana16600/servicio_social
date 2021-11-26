@@ -12,6 +12,12 @@ class BackupPage extends StatefulWidget {
 class _BackupPageState extends State<BackupPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+        ],
+        title: Text('Respaldo y Recuperación de la Base de datos'),
+      ),
+    );
   }
 }

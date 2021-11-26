@@ -21,7 +21,7 @@ class _ReportesPageState extends State<ReportesPage> {
         title: Text('Generar reportes'),
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.push(
                   context,
                   MaterialPageRoute(
