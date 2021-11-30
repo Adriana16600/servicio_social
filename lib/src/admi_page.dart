@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:servicio_social/src/registro.dart';
 import 'package:servicio_social/src/generar_reportes.dart';
 import 'package:servicio_social/src/backup_page.dart';
+import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 class TablaAlumnos extends StatefulWidget {
   @override
@@ -11,12 +12,14 @@ class TablaAlumnos extends StatefulWidget {
 }
 
 class _TablaAlumnosState extends State<TablaAlumnos> {
+  SearchBar searchBar;
   bool Archivados = true;
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
+
           IconButton(
             tooltip: Archivados ? 'Ver Archivados' : 'Ver alumnos',
             onPressed: () {

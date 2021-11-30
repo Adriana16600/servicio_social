@@ -13,9 +13,6 @@ class AdminLoginPage extends StatefulWidget {
 }
 
 class _AdminLoginPageState extends State<AdminLoginPage> {
-  String user = '',
-  clave='';
-
   @override
   Widget build(BuildContext context) {
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -109,46 +106,10 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                 Container(
                   width: 150,
                   child: ElevatedButton(
-                    onPressed: user != ''
-                        ? () {
-                      FirebaseFirestore.instance
-                          .collection('usuarios')
-                          .where('usuario', isEqualTo: user)
-                          .get()
-                          .then((value) {
-                        print('$value');
-                        if (value.docs.isNotEmpty) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => TablaAlumnos(
-                                  alumno: value.docs[0],
-                                ),
-                              ));
-                        } else {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text('Advertencia'),
-                                content: Text(
-                                    'Este usuario no existe'),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text('OK'))
-                                ],
-                              );
-                            },
-                          );
-                        }
-                      });
-                    }
-                        : null,
                     child: Text('Entrar'),
-
+                    onPressed: () {
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => TablaAlumnos(),));
+                    },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 20),
                       shape: RoundedRectangleBorder(
