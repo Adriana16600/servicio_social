@@ -19,7 +19,6 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-
           IconButton(
             tooltip: Archivados ? 'Ver Archivados' : 'Ver alumnos',
             onPressed: () {
@@ -32,6 +31,7 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
             ),
           ),
           IconButton(
+            tooltip: 'Registrar Alumno',
             onPressed: () {
               Navigator.push(
                   context,
@@ -44,6 +44,7 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
             ),
           ),
           IconButton(
+            tooltip: 'Respaldos',
             onPressed: () {
               Navigator.push(
                   context,
@@ -56,6 +57,7 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
             ),
           ),
           IconButton(
+            tooltip: 'Reportes',
             onPressed: () {
               Navigator.push(
                   context,
@@ -87,13 +89,57 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
                   children: [
                     ListTile(
                       onTap: () {
-                        print('Hola $index');
+                        Card(
+                          clipBehavior: Clip.antiAlias,
+                          child: Column(
+                            children: [
+                              ListTile(
+                                leading: Icon(Icons.arrow_drop_down_circle),
+                                title: const Text('Card title 1'),
+                                subtitle: Text(
+                                  'Secondary Text',
+                                  style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Text(
+                                  'Greyhound divisively hello coldly wonderfully marginally far upon excluding.',
+                                  style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                                ),
+                              ),
+                              ButtonBar(
+                                alignment: MainAxisAlignment.start,
+                                children: [
+                                  FlatButton(
+                                    textColor: const Color(0xFF6200EE),
+                                    onPressed: () {
+                                      // Perform some action
+                                    },
+                                    child: const Text('ACTION 1'),
+                                  ),
+                                  FlatButton(
+                                    textColor: const Color(0xFF6200EE),
+                                    onPressed: () {
+                                      // Perform some action
+                                    },
+                                    child: const Text('ACTION 2'),
+                                  ),
+                                ],
+                              ),
+                              Image.asset('assets/card-sample-image.jpg'),
+                              Image.asset('assets/card-sample-image-2.jpg'),
+                            ],
+                          ),
+                        );
+                        //print('Hola $index');
                       },
                       subtitle: Text(
                           '${snapshot.data.docs[index]['nocontrol']} \n ${snapshot.data.docs[index]['escuela']} \n ${date(date: snapshot.data.docs[index]['fechainicio'], format: 'dd  MMMM yyy')}'),
                       title: Text(
                           '${snapshot.data.docs[index]['nombre']} ${snapshot.data.docs[index]['apaterno']} ${snapshot.data.docs[index]['amaterno']}'),
                       trailing: IconButton(
+                        tooltip: 'Archivar',
                         onPressed: () {
                           FirebaseFirestore.instance
                               .collection('alumnos')
