@@ -7,9 +7,7 @@ import 'package:servicio_social/src/backup_page.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 class TablaAlumnos extends StatefulWidget {
-  final DocumentSnapshot alumno;
-
-  const TablaAlumnos({Key key, @required this.alumno}) : super(key: key);
+  const TablaAlumnos({Key key}) : super(key: key);
   @override
   State<TablaAlumnos> createState() => _TablaAlumnosState();
 }
@@ -98,7 +96,7 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
                             return AlertDialog(
                               title: Text('Datos completos'),
                               content: Text(
-                                  '${alumno['nombre']}'),
+                                  '${snapshot.data.docs[index]['nombre']}'),
                               actions: [
                                 TextButton(
                                     onPressed: () {
