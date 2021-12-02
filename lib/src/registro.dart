@@ -4,13 +4,26 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class RegistroPage extends StatefulWidget {
-  const RegistroPage({Key key}) : super(key: key);
+  final DocumentSnapshot DatosAlumno;
+
+  const RegistroPage({Key key, this.DatosAlumno}) : super(key: key);
 
   @override
   _RegistroPageState createState() => _RegistroPageState();
 }
 
 class _RegistroPageState extends State<RegistroPage> {
+  TextEditingController numcontrolC;
+  TextEditingController nombreC;
+  TextEditingController apaternoC;
+  TextEditingController amaternoC;
+  TextEditingController escuelaC;
+  TextEditingController carreraC;
+  TextEditingController semestreC;
+  TextEditingController hrstotalesC;
+  TextEditingController telefonoC;
+  TextEditingController fechainicioC;
+
   String numcontrol = '',
       nombre = '',
       apaterno = '',
@@ -21,8 +34,35 @@ class _RegistroPageState extends State<RegistroPage> {
       hrstotales = '',
       telefono = '';
   Timestamp fechainicio;
-
   bool activo = true;
+
+  @override
+  void initState() {
+    if (widget.DatosAlumno != null) {
+      numcontrolC.text = widget.DatosAlumno['nocontrol'];
+      nombreC.text = widget.DatosAlumno['nombre'];
+      apaternoC.text = widget.DatosAlumno['apaterno'];
+      amaternoC.text = widget.DatosAlumno['amaterno'];
+      escuelaC.text = widget.DatosAlumno['escuela'];
+      carreraC.text = widget.DatosAlumno['carrera'];
+      semestreC.text = widget.DatosAlumno['semestre'];
+      hrstotalesC.text = widget.DatosAlumno['hrstotales'];
+      telefonoC.text = widget.DatosAlumno['telefono'];
+      fechainicioC.text = widget.DatosAlumno['fechainicio'];
+
+      numcontrol = widget.DatosAlumno['nocontrol'];
+      nombre = widget.DatosAlumno['nombre'];
+      apaterno = widget.DatosAlumno['apaterno'];
+      amaterno = widget.DatosAlumno['amaterno'];
+      escuela = widget.DatosAlumno['escuela'];
+      carrera = widget.DatosAlumno['carrera'];
+      semestre = widget.DatosAlumno['semestre'];
+      hrstotales = widget.DatosAlumno['hrstotales'];
+      telefono = widget.DatosAlumno['telefono'];
+      fechainicio = widget.DatosAlumno['fechainicio'];
+    }
+  }
+
   static const menuItems = <String>[
     'TECNM',
     'CONALEP',
@@ -74,6 +114,7 @@ class _RegistroPageState extends State<RegistroPage> {
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: TextFormField(
+                    controller: numcontrolC,
                     onChanged: (value) {
                       setState(() {
                         numcontrol = value;
@@ -95,6 +136,7 @@ class _RegistroPageState extends State<RegistroPage> {
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: TextFormField(
+                    controller: nombreC,
                     onChanged: (value) {
                       setState(() {
                         nombre = value;
@@ -112,6 +154,7 @@ class _RegistroPageState extends State<RegistroPage> {
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: TextFormField(
+                    controller: apaternoC,
                     onChanged: (value) {
                       setState(() {
                         apaterno = value;
@@ -129,6 +172,7 @@ class _RegistroPageState extends State<RegistroPage> {
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: TextFormField(
+                    controller: amaternoC,
                     onChanged: (value) {
                       setState(() {
                         amaterno = value;
@@ -169,6 +213,7 @@ class _RegistroPageState extends State<RegistroPage> {
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: TextFormField(
+                    controller: carreraC,
                     onChanged: (value) {
                       setState(() {
                         carrera = value;
@@ -186,6 +231,7 @@ class _RegistroPageState extends State<RegistroPage> {
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: TextFormField(
+                    controller: semestreC,
                     onChanged: (value) {
                       setState(() {
                         semestre = value;
@@ -204,6 +250,7 @@ class _RegistroPageState extends State<RegistroPage> {
           Container(
             margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: TextFormField(
+              controller: hrstotalesC,
               onChanged: (value) {
                 setState(() {
                   hrstotales = value;
@@ -220,6 +267,7 @@ class _RegistroPageState extends State<RegistroPage> {
             margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: TextFormField(
               maxLength: 10,
+              controller: telefonoC,
               onChanged: (value) {
                 setState(() {
                   telefono = value;

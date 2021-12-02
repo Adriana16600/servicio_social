@@ -44,6 +44,12 @@ class _ReportesPageState extends State<ReportesPage> {
               icon: Icons.import_contacts,
               text: 'Carta de aceptación',
               onTap: () async {
+                /*await launch(
+                  url,
+                  forceSafariVC: false,
+                  forceWebView: false,
+                  headers: <String, String>{'my_header_key': 'my_header_value'},
+                )*/
                 final pdf = pw.Document();
                 Uint8List fontData = File('ProximaNova-Black.ttf').readAsBytesSync();
                 var data = fontData.buffer.asByteData();

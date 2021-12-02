@@ -6,8 +6,12 @@ import 'package:servicio_social/src/generar_reportes.dart';
 import 'package:servicio_social/src/backup_page.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
+import 'addescuela.dart';
+import 'addusuarios.dart';
+
 class TablaAlumnos extends StatefulWidget {
   const TablaAlumnos({Key key}) : super(key: key);
+
   @override
   State<TablaAlumnos> createState() => _TablaAlumnosState();
 }
@@ -42,6 +46,30 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
             },
             icon: Icon(
               Icons.person_add_alt_1_rounded,
+            ),
+          ),IconButton(
+            tooltip: 'Agregar Escuela',
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddEscuela(),
+                  ));
+            },
+            icon: Icon(
+              Icons.school,
+            ),
+          ),IconButton(
+            tooltip: 'Agregar Usuarios',
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddUsuarios(),
+                  ));
+            },
+            icon: Icon(
+              Icons.admin_panel_settings,
             ),
           ),
           IconButton(
@@ -94,13 +122,19 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
                           context: context,
                           builder: (context) {
                             return AlertDialog(
-                              title: Text('${snapshot.data.docs[index]['nombre']} ${snapshot.data.docs[index]['apaterno']} ${snapshot.data.docs[index]['amaterno']}'),
+                              title: Text(
+                                  '${snapshot.data.docs[index]['nombre']} ${snapshot.data.docs[index]['apaterno']} ${snapshot.data.docs[index]['amaterno']}'),
                               content: Text(
-                                  '${snapshot.data.docs[index]['nocontrol']}\n${snapshot.data.docs[index]['escuela']}\n${snapshot.data.docs[index]['carrera']}\nSemestre ${snapshot.data.docs[index]['semestre']}\nTeléfono: ${snapshot.data.docs[index]['telefono']}\nFecha de inicio: ${date(date: snapshot.data.docs[index]['fechainicio'], format: 'dd  MMMM yyy')}'),
+                                  '${snapshot.data.docs[index]['nocontrol']}\n${snapshot.data.docs[index]['escuela']}\n${snapshot.data.docs[index]['carrera']}\nSemestre ${snapshot.data.docs[index]['semestre']}\nTeléfono: ${snapshot.data.docs[index]['telefono']}\nFecha de inicio: ${date(date: snapshot.data.docs[index]['fechainicio'], format: 'dd  MMMM yyy')}\nHoras totales: ${snapshot.data.docs[index]['hrstotales']}\nHoras acumuladas:\nHoras restantes:'),
                               actions: [
                                 TextButton(
                                     onPressed: () {
-                                      Navigator.pop(context);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                RegistroPage(DatosAlumno: snapshot.data.docs[index],),
+                                          ));
                                     },
                                     child: Text('Editar'))
                               ],
