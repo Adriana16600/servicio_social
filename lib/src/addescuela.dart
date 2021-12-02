@@ -2,6 +2,7 @@ import 'dart:html';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:servicio_social/src/ver_escuelas.dart';
 
 class AddEscuela extends StatefulWidget {
   final DocumentSnapshot DatosAlumno;
@@ -16,6 +17,7 @@ class _AddEscuelaState extends State<AddEscuela> {
       horas = '',
       direccion='',
       telefono='';
+  bool activo=true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,28 +113,43 @@ class _AddEscuelaState extends State<AddEscuela> {
               ),
             ],
           ),
-          Container(
-            width: 60,
-            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-            child: ElevatedButton(
-              child: Text('Agregar'),
-              onPressed: () {
-                FirebaseFirestore.instance.collection('escuelas').doc().set({
-                  'escuelaname': escuelaname,
-                  'horas': horas,
-                  'direccion': direccion,
-                  'telefono': telefono
-                });
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 20),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+          //Container(
+            //width: 60,
+            //margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            Row(
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  child: Text('Agregar'),
+                  onPressed: () {
+                    FirebaseFirestore.instance.collection('escuelas').doc().set({
+                      'escuelaname': escuelaname,
+                      'horas': horas,
+                      'direccion': direccion,
+                      'telefono': telefono,
+                      'activo': activo
+                    });
+                    Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal:100),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          )
+                TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VerEscuelas(),
+                          ));
+                    },
+                    child: Text('Ver lista de escuelas')),
+              ],
+            )
+          //)
         ],
       ),
     );
