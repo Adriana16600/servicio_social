@@ -5,7 +5,6 @@ import 'package:servicio_social/src/registro.dart';
 import 'package:servicio_social/src/generar_reportes.dart';
 import 'package:servicio_social/src/backup_page.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
-
 import 'addescuela.dart';
 import 'addusuarios.dart';
 
