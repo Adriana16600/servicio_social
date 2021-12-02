@@ -7,6 +7,9 @@ import 'package:servicio_social/src/backup_page.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 class TablaAlumnos extends StatefulWidget {
+  final DocumentSnapshot alumno;
+
+  const TablaAlumnos({Key key, @required this.alumno}) : super(key: key);
   @override
   State<TablaAlumnos> createState() => _TablaAlumnosState();
 }
@@ -89,48 +92,22 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
                   children: [
                     ListTile(
                       onTap: () {
-                        Card(
-                          clipBehavior: Clip.antiAlias,
-                          child: Column(
-                            children: [
-                              ListTile(
-                                leading: Icon(Icons.arrow_drop_down_circle),
-                                title: const Text('Card title 1'),
-                                subtitle: Text(
-                                  'Secondary Text',
-                                  style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Text(
-                                  'Greyhound divisively hello coldly wonderfully marginally far upon excluding.',
-                                  style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                                ),
-                              ),
-                              ButtonBar(
-                                alignment: MainAxisAlignment.start,
-                                children: [
-                                  FlatButton(
-                                    textColor: const Color(0xFF6200EE),
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text('Datos completos'),
+                              content: Text(
+                                  '${alumno['nombre']}'),
+                              actions: [
+                                TextButton(
                                     onPressed: () {
-                                      // Perform some action
+                                      Navigator.pop(context);
                                     },
-                                    child: const Text('ACTION 1'),
-                                  ),
-                                  FlatButton(
-                                    textColor: const Color(0xFF6200EE),
-                                    onPressed: () {
-                                      // Perform some action
-                                    },
-                                    child: const Text('ACTION 2'),
-                                  ),
-                                ],
-                              ),
-                              Image.asset('assets/card-sample-image.jpg'),
-                              Image.asset('assets/card-sample-image-2.jpg'),
-                            ],
-                          ),
+                                    child: Text('Editar'))
+                              ],
+                            );
+                          },
                         );
                         //print('Hola $index');
                       },
