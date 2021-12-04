@@ -132,7 +132,8 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                RegistroPage(DatosAlumno: snapshot.data.docs[index],),
+                                            //DatosAlumno: snapshot.data.docs[index],
+                                                RegistroPage(),
                                           ));
                                     },
                                     child: Text('Editar'))
