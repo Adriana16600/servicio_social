@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:servicio_social/src/admi_page.dart';
 import 'package:servicio_social/src/excel.dart';
@@ -8,6 +9,10 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'dart:html' as html;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:excel/excel.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 class ReportesPage extends StatefulWidget {
   const ReportesPage({Key key}) : super(key: key);
@@ -50,7 +55,7 @@ class _ReportesPageState extends State<ReportesPage> {
                   forceWebView: false,
                   headers: <String, String>{'my_header_key': 'my_header_value'},
                 )*/
-                final pdf = pw.Document();
+                /*final pdf = pw.Document();
                 Uint8List fontData = File('ProximaNova-Black.ttf').readAsBytesSync();
                 var data = fontData.buffer.asByteData();
                 pdf.addPage(
@@ -69,7 +74,7 @@ class _ReportesPageState extends State<ReportesPage> {
                     ..download = 'pdf.pdf';
                   html.document.body.children.add(anchor);
 
-                });
+                });*/
               }),
           HugeButton(
               color: Theme.of(context).colorScheme.primary,

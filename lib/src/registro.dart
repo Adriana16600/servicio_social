@@ -22,6 +22,7 @@ class _RegistroPageState extends State<RegistroPage> {
   TextEditingController semestreC;
   TextEditingController hrstotalesC;
   TextEditingController telefonoC;
+  TextEditingController servicioC;
   TextEditingController fechainicioC;
 
   String numcontrol = '',
@@ -32,7 +33,8 @@ class _RegistroPageState extends State<RegistroPage> {
       carrera = '',
       semestre = '',
       hrstotales = '',
-      telefono = '';
+      telefono = '',
+      servicio = '';
   Timestamp fechainicio;
   bool activo = true;
 
@@ -48,6 +50,7 @@ class _RegistroPageState extends State<RegistroPage> {
       semestreC.text = widget.DatosAlumno['semestre'];
       hrstotalesC.text = widget.DatosAlumno['hrstotales'];
       telefonoC.text = widget.DatosAlumno['telefono'];
+      servicioC.text = widget.DatosAlumno['servicio'];
       fechainicioC.text = widget.DatosAlumno['fechainicio'];
 
       numcontrol = widget.DatosAlumno['nocontrol'];
@@ -59,6 +62,7 @@ class _RegistroPageState extends State<RegistroPage> {
       semestre = widget.DatosAlumno['semestre'];
       hrstotales = widget.DatosAlumno['hrstotales'];
       telefono = widget.DatosAlumno['telefono'];
+      servicio = widget.DatosAlumno['telefono'];
       fechainicio = widget.DatosAlumno['fechainicio'];
     }
   }
@@ -69,6 +73,7 @@ class _RegistroPageState extends State<RegistroPage> {
     'CBTIS 81',
     'COBACH',
   ];
+
   final List<DropdownMenuItem<String>> _dropDownMenuItems = menuItems
       .map(
         (String value) => DropdownMenuItem<String>(
@@ -88,6 +93,33 @@ class _RegistroPageState extends State<RegistroPage> {
   String _btn1SelectedVal = 'TECNM';
   String _btn2SelectedVal;
   String _btn3SelectedVal;
+
+  static const menuItems2 = <String>[
+    'Laboratorios de cómputo',
+    'Biblioteca',
+    'otro',
+    'Otro',
+  ];
+
+  final List<DropdownMenuItem<String>> _dropDownMenuItems2 = menuItems2
+      .map(
+        (String value) => DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        ),
+      )
+      .toList();
+  final List<PopupMenuItem<String>> _popUpMenuItems2 = menuItems2
+      .map(
+        (String value) => PopupMenuItem<String>(
+          value: value,
+          child: Text(value),
+        ),
+      )
+      .toList();
+  String _btn1SelectedVal2 = 'Biblioteca';
+  String _btn2SelectedVal2;
+  String _btn3SelectedVal2;
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +229,7 @@ class _RegistroPageState extends State<RegistroPage> {
                     title: const Text('Escuela'),
                     trailing: DropdownButton(
                       value: _btn2SelectedVal,
-                      hint: const Text('Escuela'),
+                      hint: const Text('Elegir'),
                       onChanged: (String newValue) {
                         setState(() {
                           _btn2SelectedVal = newValue;
@@ -247,21 +279,46 @@ class _RegistroPageState extends State<RegistroPage> {
               ),
             ],
           ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: TextFormField(
-              controller: hrstotalesC,
-              onChanged: (value) {
-                setState(() {
-                  hrstotales = value;
-                });
-              },
-              decoration: InputDecoration(
-                labelText: 'Horas a realizar',
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  child: TextFormField(
+                    controller: hrstotalesC,
+                    onChanged: (value) {
+                      setState(() {
+                        hrstotales = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Horas a realizar',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                ),
               ),
-            ),
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  child: ListTile(
+                    title: const Text('Área de servicio social'),
+                    trailing: DropdownButton(
+                      value: _btn2SelectedVal2,
+                      hint: const Text('Elegir'),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          _btn2SelectedVal2 = newValue;
+                          servicio = newValue;
+                        });
+                      },
+                      items: _dropDownMenuItems2,
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -321,6 +378,7 @@ class _RegistroPageState extends State<RegistroPage> {
                   'carrera': carrera,
                   'semestre': semestre,
                   'hrstotales': hrstotales,
+                  'servicio': servicio,
                   'fechainicio': fechainicio,
                   'activo': activo
                 });

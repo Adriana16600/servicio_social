@@ -50,7 +50,7 @@ class _AppState extends State<App> {
     }
 
     return MaterialApp(
-      title: 'Servicio',
+      title: 'Servicio Social TECNM',
       debugShowCheckedModeBanner: false,
       theme: MyTheme.define(),
       localizationsDelegates: const [
