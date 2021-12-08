@@ -1,4 +1,4 @@
-/*
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
@@ -81,7 +81,7 @@ class _addState extends State<add> {
               height: MediaQuery.of(context).size.height -
                   (MediaQuery.of(context).size.height / 7 + 120),
               width: MediaQuery.of(context).size.width -
-                  (MediaQuery.of(context).size.height / 7),
+                  (MediaQuery.of(context).size.height / 7)-200,
               child: visibilityCont
                   ? CartInsert(cant: int.parse(_cant.text))
                   : Container(),
@@ -103,7 +103,6 @@ class CartInsert extends StatefulWidget {
 }
 
 class _CartInsertState extends State<CartInsert> {
-  FireBridge fire = new FireBridge();
   bool visibilityCont = false;
 
   void _changed(bool visibility) {
@@ -161,7 +160,7 @@ class _CartInsertState extends State<CartInsert> {
               Container(
                 height: 60,
                 width: MediaQuery.of(context).size.width -
-                    (200 + MediaQuery.of(context).size.height / 7),
+                    (200 + MediaQuery.of(context).size.height / 7) -200,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
@@ -456,7 +455,7 @@ class _CartInsertState extends State<CartInsert> {
               child: ElevatedButton(
                 onPressed: () {
                   print('${dataList1.length}');
-                  fire.createUser(dataList1);
+                  createUser(dataList1);
                 },
                 child: Text('Guardar'),
               ),
@@ -467,6 +466,34 @@ class _CartInsertState extends State<CartInsert> {
       ),
     );
   }
+
+  Future<bool> createUser(var array) {
+
+    for(int x=0; x<array.length; x++){
+      FirebaseFirestore.instance
+          .collection('alumnos')
+          .doc()
+          .set({
+        'nombre': array[x][4],
+        'apellido_materno': array[x][6],
+        'apellido_paterno': array[x][5],
+        'carrera': array[x][2],
+        'correo': array[x][7],
+        'fecha_nacimiento': array[x][8],
+        'id_usuario': array[x][3],
+        'tipo_usuario': array[x][1],
+        'sexo': array[x][0],
+      })
+          .then((value) => true)
+          .onError((error, stackTrace) => false);
+
+    }
+
+
+
+  }
+
+
 }
 
 class VerArray extends StatefulWidget {
@@ -595,4 +622,4 @@ class _VerArrayState extends State<VerArray> {
           ),
         ));
   }
-}*/
+}

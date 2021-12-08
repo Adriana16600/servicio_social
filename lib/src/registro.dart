@@ -121,6 +121,35 @@ class _RegistroPageState extends State<RegistroPage> {
   String _btn2SelectedVal2;
   String _btn3SelectedVal2;
 
+  static const menuItems3 = <String>[
+    'Ingeniería Civil',
+    'Ingeniería en Electrónica',
+    'Ingeniería en Gestión Empresarial',
+    'Ingeniería Industrial',
+    'Ingeniería en Sistemas Computacionales',
+    'Ingeniería Mecatrónica'
+  ];
+
+  final List<DropdownMenuItem<String>> _dropDownMenuItems3 = menuItems3
+      .map(
+        (String value) => DropdownMenuItem<String>(
+      value: value,
+      child: Text(value),
+    ),
+  )
+      .toList();
+  final List<PopupMenuItem<String>> _popUpMenuItems3 = menuItems3
+      .map(
+        (String value) => PopupMenuItem<String>(
+      value: value,
+      child: Text(value),
+    ),
+  )
+      .toList();
+  String _btn1SelectedVal3 = 'Biblioteca';
+  String _btn2SelectedVal3;
+  String _btn3SelectedVal3;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -244,17 +273,18 @@ class _RegistroPageState extends State<RegistroPage> {
               Expanded(
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                  child: TextFormField(
-                    controller: carreraC,
-                    onChanged: (value) {
-                      setState(() {
-                        carrera = value;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Carrera',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                  child: ListTile(
+                    title: const Text('Carrera'),
+                    trailing: DropdownButton(
+                      value: _btn2SelectedVal3,
+                      hint: const Text('Elegir'),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          _btn2SelectedVal3 = newValue;
+                          escuela = newValue;
+                        });
+                      },
+                      items: _dropDownMenuItems3,
                     ),
                   ),
                 ),

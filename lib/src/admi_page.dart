@@ -9,7 +9,9 @@ import 'addescuela.dart';
 import 'addusuarios.dart';
 
 class TablaAlumnos extends StatefulWidget {
-  const TablaAlumnos({Key key}) : super(key: key);
+  final DocumentSnapshot admi;
+  const TablaAlumnos({Key key, this.admi}) : super(key: key);
+  //const TablaAlumnos({Key key, @required this.admi}) : super(key: key);
 
   @override
   State<TablaAlumnos> createState() => _TablaAlumnosState();
@@ -46,7 +48,21 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
             icon: Icon(
               Icons.person_add_alt_1_rounded,
             ),
-          ),IconButton(
+          ),
+          IconButton(
+            tooltip: 'Carga masiva',
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RegistroPage(),
+                  ));
+            },
+            icon: Icon(
+              Icons.person_add_alt_1_rounded,
+            ),
+          ),
+          IconButton(
             tooltip: 'Agregar Escuela',
             onPressed: () {
               Navigator.push(

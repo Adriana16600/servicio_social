@@ -13,115 +13,164 @@ class AdminLoginPage extends StatefulWidget {
 }
 
 class _AdminLoginPageState extends State<AdminLoginPage> {
+  String control = '', control2='';
+
   @override
   Widget build(BuildContext context) {
     FirebaseAuth auth = FirebaseAuth.instance;
     bool passwordVisibility = true;
 
-    final TextEditingController _emailController = TextEditingController();
-    final TextEditingController _passwordController = TextEditingController();
+    TextEditingController _emailController = TextEditingController();
+    TextEditingController _passwordController = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
 
-        title: Text('Entrando al modo administrador'),
+        title: const Text('Entrando al modo administrador'),
       ),
-      body: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              alignment: Alignment.center,
-              child: Image(
-                image: NetworkImage(
-                    'http://www.huatabampo.tecnm.mx/wp-content/uploads/2019/09/TecNM-logo-216x300.png'),
-                height: 500,
-                fit: BoxFit.fitWidth,
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            alignment: Alignment.center,
+            child: const Image(
+              image: NetworkImage(
+                  'http://www.huatabampo.tecnm.mx/wp-content/uploads/2019/09/TecNM-logo-216x300.png'),
+              height: 500,
+              fit: BoxFit.fitWidth,
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.account_circle_rounded,
+                      size: 100,
+                    ),
+                    Text('Administrador',
+                        style: Theme.of(context).textTheme.headline3.copyWith(
+                            color: Theme.of(context).colorScheme.onSurface)),
+                  ],
+                ),
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.account_circle_rounded,
-                        size: 100,
-                      ),
-                      Text('Administrador',
-                          style: Theme.of(context).textTheme.headline3.copyWith(
-                              color: Theme.of(context).colorScheme.onSurface)),
-                    ],
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  width: 500,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      controller: _emailController,
-                      decoration: InputDecoration(
-                        labelText: 'Usuario',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        prefixIcon: Icon(
-                          Icons.person_rounded,
-                        ),
-                      ),
-                      validator: (String value) {
-                        if (value.isEmpty) return 'Inserte un usuario válido';
-                        return null;
-                      },
-                    ),
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  width: 500,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      controller: _passwordController,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: 'Nip',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        prefixIcon: const Icon(
-                          Icons.password_rounded,
-                        ),
-                      ),
-                      validator: (String value) {
-                        if (value.isEmpty) return 'Inserte una contraseña';
-                        return null;
-                      },
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 150,
-                  child: ElevatedButton(
-                    child: Text('Entrar'),
-                    onPressed: () {
-                      Navigator.push(context,MaterialPageRoute(builder: (context) => TablaAlumnos(),));
+              Container(
+                alignment: Alignment.center,
+                width: 500,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    controller: _emailController,
+                    onChanged: (value) {
+                      setState(() {
+                        control = value;
+                      });
                     },
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                    decoration: InputDecoration(
+                      labelText: 'Usuario',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      prefixIcon: const Icon(
+                        Icons.person_rounded,
                       ),
                     ),
+                    /*validator: (String value) {
+                      if (value.isEmpty) return 'Inserte un usuario válido';
+                      return null;
+                    },*/
                   ),
-                )
-              ],
-            ),
-          ],
-        ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                width: 500,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    controller: _passwordController,
+                    onChanged: (value) {
+                      setState(() {
+                        control2 = value;
+                      });
+                    },
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Nip',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      prefixIcon: const Icon(
+                        Icons.password_rounded,
+                      ),
+                    ),
+                    validator: (String value) {
+                      if (value.isEmpty) return 'Inserte una contraseña';
+                      return null;
+                    },
+                  ),
+                ),
+              ),
+              Container(
+                width: 150,
+                child: ElevatedButton(
+                  child: Text('Entrar'),
+                  onPressed: () {
+                    onPressed: control != ''
+                        ? () {
+                      FirebaseFirestore.instance
+                          .collection('usuarios')
+                          .where('usuario', isEqualTo: control)
+                          //.where('nip', isEqualTo: control2)
+                          .get()
+                          .then((value) {
+                        print('$value');
+                        if (value.docs.isNotEmpty) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TablaAlumnos(
+                                  admi: value.docs[0],
+                                ),
+                              ));
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text('Advertencia'),
+                                content: const Text(
+                                    'Este usuario no existe'),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('OK'))
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      });
+                    }
+                        : null;
+                    //Navigator.push(context,MaterialPageRoute(builder: (context) => TablaAlumnos(),));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }

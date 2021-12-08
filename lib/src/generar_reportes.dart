@@ -49,6 +49,18 @@ class _ReportesPageState extends State<ReportesPage> {
               icon: Icons.import_contacts,
               text: 'Carta de aceptación',
               onTap: () async {
+                final pdf = pw.Document();
+
+                pdf.addPage(pw.Page(
+                    pageFormat: PdfPageFormat.a4,
+                    build: (pw.Context context) {
+                      return pw.Center(
+                        child: pw.Text("Hello World"),
+                      ); // Center
+                    })); // Page
+
+                final file = File("example.pdf");
+                await file.writeAsBytes(await pdf.save());
                 /*await launch(
                   url,
                   forceSafariVC: false,
