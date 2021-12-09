@@ -160,7 +160,7 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
                               title: Text(
                                   '${snapshot.data.docs[index]['nombre']} ${snapshot.data.docs[index]['apaterno']} ${snapshot.data.docs[index]['amaterno']}'),
                               content: Text(
-                                  '${snapshot.data.docs[index]['nocontrol']}\n${snapshot.data.docs[index]['escuela']}\n${snapshot.data.docs[index]['carrera']}\nSemestre ${snapshot.data.docs[index]['semestre']}\nTeléfono: ${snapshot.data.docs[index]['telefono']}\nÁrea: ${snapshot.data.docs[index]['servicio']}\nFecha de inicio: ${date(date: snapshot.data.docs[index]['fechainicio'], format: 'dd  MMMM yyy')}\nHoras totales: ${snapshot.data.docs[index]['hrstotales']} \nHoras acumuladas:\nÁrea de SS: ${snapshot.data.docs[index]['servicio']}'),
+                                  '${snapshot.data.docs[index]['nocontrol']}\n${snapshot.data.docs[index]['escuela']}\n${snapshot.data.docs[index]['carrera']}\nSemestre ${snapshot.data.docs[index]['semestre']}\nTeléfono: ${snapshot.data.docs[index]['telefono']}\nÁrea: ${snapshot.data.docs[index]['servicio']}\nFecha de inicio: ${date(date: snapshot.data.docs[index]['fechainicio'], format: 'dd  MMMM yyy')}\nHoras totales: ${snapshot.data.docs[index]['hrstotales']} \nHoras acumuladas:'),
                               actions: [
                                 TextButton(
                                     onPressed: () {
