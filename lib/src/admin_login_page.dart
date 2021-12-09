@@ -13,17 +13,12 @@ class AdminLoginPage extends StatefulWidget {
 }
 
 class _AdminLoginPageState extends State<AdminLoginPage> {
-  String control = '', control2 = '';
+  String controlStr = '', nipStr = '';
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    bool passwordVisibility = true;
-
-
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Entrando al modo administrador'),
@@ -67,7 +62,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                   controller: _emailController,
                   onChanged: (value) {
                     setState(() {
-                      control = value;
+                      controlStr = value;
                     });
                   },
                   decoration: InputDecoration(
@@ -78,10 +73,10 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                       Icons.person_rounded,
                     ),
                   ),
-                  /*validator: (String value) {
+                  validator: (String value) {
                     if (value.isEmpty) return 'Inserte un usuario válido';
                     return null;
-                  },*/
+                  },
                 ),
               ),
               Container(
@@ -93,7 +88,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                     controller: _passwordController,
                     onChanged: (value) {
                       setState(() {
-                        control2 = value;
+                        nipStr = value;
                       });
                     },
                     obscureText: true,
@@ -116,48 +111,47 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                 width: 150,
                 child: ElevatedButton(
                   child: Text('Entrar'),
-                  onPressed: () {
-                    control != ''
-                        ? () {
-                            FirebaseFirestore.instance
-                                .collection('usuarios')
-                                .where('usuario', isEqualTo: control)
-                                //.where('nip', isEqualTo: control2)
-                                .get()
-                                .then((value) {
-                              print('$value');
-                              if (value.docs.isNotEmpty) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => TablaAlumnos(
-                                        admi: value.docs[0],
-                                      ),
-                                    ));
-                              } else {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: const Text('Advertencia'),
-                                      content:
-                                          const Text('Este usuario no existe'),
-                                      actions: [
-                                        TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text('OK'))
-                                      ],
-                                    );
-                                  },
-                                );
-                              }
-                            });
-                          }
-                        : null;
-                    //Navigator.push(context,MaterialPageRoute(builder: (context) => TablaAlumnos(),));
-                  },
+                  onPressed: controlStr != '' && nipStr != ''
+                      ? () {
+                          FirebaseFirestore.instance
+                              .collection('usuarios')
+                              .where('usuario', isEqualTo: controlStr)
+                              //.where('nip', isEqualTo: control2)
+                              .get()
+                              .then((value) {
+                            print('$value');
+                            if (value.docs.isNotEmpty) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TablaAlumnos(
+                                      admi: value.docs[0],
+                                    ),
+                                  ));
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: const Text('Advertencia'),
+                                    content:
+                                        const Text('Este usuario no existe'),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text('OK'))
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          });
+                        }
+                      : null
+                  //Navigator.push(context,MaterialPageRoute(builder: (context) => TablaAlumnos(),));
+                  ,
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(vertical: 20),
                     shape: RoundedRectangleBorder(
