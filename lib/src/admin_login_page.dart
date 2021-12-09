@@ -125,7 +125,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => TablaAlumnos(
-                                      admi: value.docs[0],
+                                      //admi: value.docs[0],
                                     ),
                                   ));
                             } else {

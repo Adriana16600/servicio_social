@@ -28,18 +28,6 @@ class _ReportesPageState extends State<ReportesPage> {
       appBar: AppBar(
         title: Text('Generar reportes'),
         actions: [
-          IconButton(
-            onPressed: () async {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TablaAlumnos(),
-                  ));
-            },
-            icon: Icon(
-              Icons.history_rounded,
-            ),
-          ),
         ],
       ),
       body: Row(
@@ -55,11 +43,11 @@ class _ReportesPageState extends State<ReportesPage> {
                     pageFormat: PdfPageFormat.a4,
                     build: (pw.Context context) {
                       return pw.Center(
-                        child: pw.Text("Hello World"),
+                        child: pw.Text("Carta de aceptación"),
                       ); // Center
                     })); // Page
 
-                final file = File("example.pdf");
+                final file = File("Carta de aceptación.pdf");
                 await file.writeAsBytes(await pdf.save());
                 /*await launch(
                   url,

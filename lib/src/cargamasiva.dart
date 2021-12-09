@@ -1,4 +1,3 @@
-/*
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -6,14 +5,14 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 import 'firebase/firebase.dart';
 
-class add extends StatefulWidget {
-  const add({Key key}) : super(key: key);
+class Masiva extends StatefulWidget {
+  const Masiva({Key key}) : super(key: key);
 
   @override
-  _addState createState() => _addState();
+  _MasivaState createState() => _MasivaState();
 }
 
-class _addState extends State<add> {
+class _MasivaState extends State<Masiva> {
   bool visibilityCont = false;
 
   void _changed(bool visibility) {
@@ -28,16 +27,7 @@ class _addState extends State<add> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Agregar Usuario'),
-        centerTitle: true,
-        titleTextStyle: Theme
-            .of(context)
-            .textTheme
-            .headline4,
-        backgroundColor: Theme
-            .of(context)
-            .colorScheme
-            .surface,
+        title: const Text('Carga masiva de alumnos'),
       ),
       body: Container(
         child: Column(
@@ -139,7 +129,7 @@ class _CartInsertState extends State<CartInsert> {
 
   String dropCarrera = 'Contador Público';
   String dropEscuela = 'TECNM';
-  String dropArea = 'Centro de cómputo';
+  String dropArea = 'Centro de Cómputo';
   final format = DateFormat("dd-MM-yyyy");
 
   var dataList;
@@ -312,48 +302,6 @@ class _CartInsertState extends State<CartInsert> {
                           },
                           items: <String>['Centro de Cómputo', 'Biblioteca','otro','Otro']
                               .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .subtitle1
-                                    .copyWith(color: Colors.black54),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 5, bottom: 10, top: 10),
-                      child: Container(
-                        width: 150,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(width: 1, color: Colors.grey),
-                        ),
-                        child: DropdownButton<String>(
-                          borderRadius: BorderRadius.circular(10),
-                          isExpanded: true,
-                          value: dropCarrera,
-                          onChanged: (String newValue) {
-                            setState(() {
-                              dropCarrera = newValue;
-                            });
-                          },
-                          items: <String>[
-                            'Contador Público',
-                            'Licenciatura en Administración',
-                            'Ingeniería en Electrónica',
-                            'Ingeniería en Sistemas Computacionales',
-                            'Ingeniería Industrial',
-                            'Ingeniería en Mecatrónica',
-                            'Ingeniería en Gestión Empresarial',
-                            'Ingeniería Civil'
-                          ].map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(
@@ -818,4 +766,3 @@ class _VerArrayState extends State<VerArray> {
         ));
   }
 }
-*/

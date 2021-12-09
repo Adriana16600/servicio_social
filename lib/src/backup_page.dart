@@ -26,18 +26,6 @@ class _BackupPageState extends State<BackupPage> {
       appBar: AppBar(
         title: Text('Respaldo y recuperación'),
         actions: [
-          IconButton(
-            onPressed: () async {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => BackupPage(),
-                  ));
-            },
-            icon: Icon(
-              Icons.history_rounded,
-            ),
-          ),
         ],
       ),
       body: Row(

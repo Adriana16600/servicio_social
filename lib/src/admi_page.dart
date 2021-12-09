@@ -1,16 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:servicio_social/src/addactividades.dart';
+import 'package:servicio_social/src/addescuela.dart';
+import 'package:servicio_social/src/addusuarios.dart';
+import 'package:servicio_social/src/cargamasiva.dart';
 import 'package:servicio_social/src/registro.dart';
 import 'package:servicio_social/src/generar_reportes.dart';
 import 'package:servicio_social/src/backup_page.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
-import 'addescuela.dart';
-import 'addusuarios.dart';
 
 class TablaAlumnos extends StatefulWidget {
-  final DocumentSnapshot admi;
-  const TablaAlumnos({Key key, this.admi}) : super(key: key);
+  //final DocumentSnapshot admi;
+
+  const TablaAlumnos({Key key,}) : super(key: key);
+
   //const TablaAlumnos({Key key, @required this.admi}) : super(key: key);
 
   @override
@@ -55,11 +59,24 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => RegistroPage(),
+                    builder: (context) => Masiva(),
                   ));
             },
             icon: Icon(
               Icons.group_add,
+            ),
+          ),
+          IconButton(
+            tooltip: 'Actividades',
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddAct(),
+                  ));
+            },
+            icon: Icon(
+              Icons.pending_actions,
             ),
           ),
           IconButton(
@@ -74,7 +91,8 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
             icon: Icon(
               Icons.school,
             ),
-          ),IconButton(
+          ),
+          IconButton(
             tooltip: 'Agregar Usuarios',
             onPressed: () {
               Navigator.push(
@@ -114,7 +132,9 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
             ),
           )
         ],
-        title: Archivados ? Text('Alumnos haciendo servicio social'):Text('Alumnos que ha finalizado el servicio social'),
+        title: Archivados
+            ? Text('Alumnos haciendo servicio social')
+            : Text('Alumnos que ha finalizado el servicio social'),
       ),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
@@ -140,7 +160,7 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
                               title: Text(
                                   '${snapshot.data.docs[index]['nombre']} ${snapshot.data.docs[index]['apaterno']} ${snapshot.data.docs[index]['amaterno']}'),
                               content: Text(
-                                  '${snapshot.data.docs[index]['nocontrol']}\n${snapshot.data.docs[index]['escuela']}\n${snapshot.data.docs[index]['carrera']}\nSemestre ${snapshot.data.docs[index]['semestre']}\nTeléfono: ${snapshot.data.docs[index]['telefono']}\nÁrea: ${snapshot.data.docs[index]['servicio']}\nFecha de inicio: ${date(date: snapshot.data.docs[index]['fechainicio'], format: 'dd  MMMM yyy')}\nHoras totales: ${snapshot.data.docs[index]['hrstotales']} \nHoras acumuladas:\nHoras restantes:'),
+                                  '${snapshot.data.docs[index]['nocontrol']}\n${snapshot.data.docs[index]['escuela']}\n${snapshot.data.docs[index]['carrera']}\nSemestre ${snapshot.data.docs[index]['semestre']}\nTeléfono: ${snapshot.data.docs[index]['telefono']}\nÁrea: ${snapshot.data.docs[index]['servicio']}\nFecha de inicio: ${date(date: snapshot.data.docs[index]['fechainicio'], format: 'dd  MMMM yyy')}\nHoras totales: ${snapshot.data.docs[index]['hrstotales']} \nHoras acumuladas:\nÁrea de SS: ${snapshot.data.docs[index]['servicio']}'),
                               actions: [
                                 TextButton(
                                     onPressed: () {
@@ -148,7 +168,7 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                            //DatosAlumno: snapshot.data.docs[index],
+                                                //DatosAlumno: snapshot.data.docs[index],
                                                 RegistroPage(),
                                           ));
                                     },
