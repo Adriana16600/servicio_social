@@ -13,19 +13,19 @@ class AdminLoginPage extends StatefulWidget {
 }
 
 class _AdminLoginPageState extends State<AdminLoginPage> {
-  String control = '', control2='';
+  String control = '', control2 = '';
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     FirebaseAuth auth = FirebaseAuth.instance;
     bool passwordVisibility = true;
 
-    TextEditingController _emailController = TextEditingController();
-    TextEditingController _passwordController = TextEditingController();
+
 
     return Scaffold(
       appBar: AppBar(
-
         title: const Text('Entrando al modo administrador'),
       ),
       body: Row(
@@ -61,29 +61,27 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
               ),
               Container(
                 alignment: Alignment.center,
+                padding: const EdgeInsets.all(8.0),
                 width: 500,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    controller: _emailController,
-                    onChanged: (value) {
-                      setState(() {
-                        control = value;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Usuario',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      prefixIcon: const Icon(
-                        Icons.person_rounded,
-                      ),
+                child: TextFormField(
+                  controller: _emailController,
+                  onChanged: (value) {
+                    setState(() {
+                      control = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Usuario',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    prefixIcon: const Icon(
+                      Icons.person_rounded,
                     ),
-                    /*validator: (String value) {
-                      if (value.isEmpty) return 'Inserte un usuario válido';
-                      return null;
-                    },*/
                   ),
+                  /*validator: (String value) {
+                    if (value.isEmpty) return 'Inserte un usuario válido';
+                    return null;
+                  },*/
                 ),
               ),
               Container(
@@ -119,44 +117,45 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                 child: ElevatedButton(
                   child: Text('Entrar'),
                   onPressed: () {
-                    onPressed: control != ''
+                    onPressed:
+                    control != ''
                         ? () {
-                      FirebaseFirestore.instance
-                          .collection('usuarios')
-                          .where('usuario', isEqualTo: control)
-                          //.where('nip', isEqualTo: control2)
-                          .get()
-                          .then((value) {
-                        print('$value');
-                        if (value.docs.isNotEmpty) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => TablaAlumnos(
-                                  admi: value.docs[0],
-                                ),
-                              ));
-                        } else {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: const Text('Advertencia'),
-                                content: const Text(
-                                    'Este usuario no existe'),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text('OK'))
-                                ],
-                              );
-                            },
-                          );
-                        }
-                      });
-                    }
+                            FirebaseFirestore.instance
+                                .collection('usuarios')
+                                .where('usuario', isEqualTo: control)
+                                //.where('nip', isEqualTo: control2)
+                                .get()
+                                .then((value) {
+                              print('$value');
+                              if (value.docs.isNotEmpty) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => TablaAlumnos(
+                                        admi: value.docs[0],
+                                      ),
+                                    ));
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: const Text('Advertencia'),
+                                      content:
+                                          const Text('Este usuario no existe'),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('OK'))
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+                            });
+                          }
                         : null;
                     //Navigator.push(context,MaterialPageRoute(builder: (context) => TablaAlumnos(),));
                   },
