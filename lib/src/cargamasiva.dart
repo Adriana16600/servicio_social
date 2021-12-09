@@ -292,6 +292,39 @@ class _CartInsertState extends State<CartInsert> {
                           }).toList(),
                         ),
                       ),
+                    ),Padding(
+                      padding: EdgeInsets.only(left: 5, bottom: 10, top: 10),
+                      child: Container(
+                        width: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(width: 1, color: Colors.grey),
+                        ),
+                        child: DropdownButton<String>(
+                          borderRadius: BorderRadius.circular(10),
+                          isExpanded: true,
+                          value: dropArea,
+                          onChanged: (String newValue) {
+                            setState(() {
+                              dropArea = newValue;
+                            });
+                          },
+                          items: <String>['Centro de Cómputo', 'Biblioteca','otro','Otro']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    .copyWith(color: Colors.black54),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 5, bottom: 10, top: 10),
@@ -428,51 +461,6 @@ class _CartInsertState extends State<CartInsert> {
                         ),
                       ),
                     ),
-                    Container(
-                      width: 400,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 5, bottom: 10, top: 10),
-                        child: TextFormField(
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .subtitle1,
-                          controller: _correo,
-                          decoration: InputDecoration(
-                            labelText: 'Correo',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                          ),
-                          validator: (String value) {
-                            if (value.isEmpty)
-                              return 'Porfavor ingrese sus datos completos';
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 200,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 5, bottom: 10, top: 10),
-                        child: DateTimeField(
-                          controller: _fechaNac,
-                          decoration: InputDecoration(
-                            labelText: 'Fecha de Nacimiento',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                          ),
-                          format: format,
-                          onShowPicker: (context, currentValue) {
-                            return showDatePicker(
-                                context: context,
-                                firstDate: DateTime(1900),
-                                initialDate: currentValue ?? DateTime.utc(2000),
-                                lastDate: DateTime(2100));
-                          },
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -485,17 +473,17 @@ class _CartInsertState extends State<CartInsert> {
                     onPressed: () {
                       if (cont == widget.cant) {}
                       if (cont < widget.cant) {
-                        dataList[cont][0] = dropSexo;
-                        dataList[cont][1] = dropUser;
-                        dataList[cont][2] = dropCarrera;
-                        dataList[cont][3] = _id.text;
+                        dataList[cont][0] = dropEscuela;
+                        dataList[cont][1] = dropCarrera;
+                        dataList[cont][2] = dropArea;
+                        dataList[cont][3] = _nocontrol.text;
                         dataList[cont][4] = _nombre.text;
-                        dataList[cont][5] = _apellidoP.text;
-                        dataList[cont][6] = _apellidoM.text;
-                        dataList[cont][7] = _correo.text;
-                        dataList[cont][8] = _fechaNac.text;
-                        dataList[cont][9] = _fechaNac.text;
-                        dataList[cont][10] = _fechaNac.text;
+                        dataList[cont][5] = _apaterno.text;
+                        dataList[cont][6] = _amaterno.text;
+                        dataList[cont][7] = _escuela.text;
+                        dataList[cont][8] = _carrera.text;
+                        dataList[cont][9] = _semestre.text;
+                        dataList[cont][10] = _hrstotales.text;
                         if (cont == widget.cant - 1) {
                           _changed(true);
                           clear();
