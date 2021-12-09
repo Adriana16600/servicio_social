@@ -95,7 +95,7 @@ class _RegistroPageState extends State<RegistroPage> {
   String _btn3SelectedVal;
 
   static const menuItems2 = <String>[
-    'Laboratorios de cómputo',
+    'Centro de cómputo',
     'Biblioteca',
     'otro',
     'Otro',
@@ -122,6 +122,8 @@ class _RegistroPageState extends State<RegistroPage> {
   String _btn3SelectedVal2;
 
   static const menuItems3 = <String>[
+    'Contador Público',
+    'Licenciatura en Administración',
     'Ingeniería Civil',
     'Ingeniería en Electrónica',
     'Ingeniería en Gestión Empresarial',
@@ -293,6 +295,7 @@ class _RegistroPageState extends State<RegistroPage> {
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: TextFormField(
+                    maxLength: 2,
                     controller: semestreC,
                     onChanged: (value) {
                       setState(() {

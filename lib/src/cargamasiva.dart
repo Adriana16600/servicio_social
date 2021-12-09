@@ -29,8 +29,14 @@ class _addState extends State<add> {
       appBar: AppBar(
         title: const Text('Agregar Usuario'),
         centerTitle: true,
-        titleTextStyle: Theme.of(context).textTheme.headline4,
-        backgroundColor: Theme.of(context).colorScheme.surface,
+        titleTextStyle: Theme
+            .of(context)
+            .textTheme
+            .headline4,
+        backgroundColor: Theme
+            .of(context)
+            .colorScheme
+            .surface,
       ),
       body: Container(
         child: Column(
@@ -42,15 +48,21 @@ class _addState extends State<add> {
               child: Row(
                 children: [
                   Text(
-                    'Cuantos usuarios desea registrar',
-                    style: Theme.of(context).textTheme.headline6,
+                    'Cantidad de alumnos',
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headline6,
                   ),
                   Container(
                     width: 100,
                     child: Padding(
                       padding: EdgeInsets.only(left: 20, bottom: 10, top: 10),
                       child: TextFormField(
-                        style: Theme.of(context).textTheme.subtitle1,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .subtitle1,
                         controller: _cant,
                         textCapitalization: TextCapitalization.characters,
                         decoration: InputDecoration(
@@ -59,7 +71,7 @@ class _addState extends State<add> {
                         ),
                         validator: (String value) {
                           if (value.isEmpty)
-                            return 'Porfavor ingrese datos completos';
+                            return 'No se puede dejar vacío este campo';
                           return null;
                         },
                       ),
@@ -78,10 +90,22 @@ class _addState extends State<add> {
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height -
-                  (MediaQuery.of(context).size.height / 7 + 120),
-              width: MediaQuery.of(context).size.width -
-                  (MediaQuery.of(context).size.height / 7)-200,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height -
+                  (MediaQuery
+                      .of(context)
+                      .size
+                      .height / 7 + 120),
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width -
+                  (MediaQuery
+                      .of(context)
+                      .size
+                      .height / 7) - 200,
               child: visibilityCont
                   ? CartInsert(cant: int.parse(_cant.text))
                   : Container(),
@@ -111,9 +135,10 @@ class _CartInsertState extends State<CartInsert> {
     });
   }
 
-  String dropUser = 'Alumno';
-  String dropSexo = 'Masculino';
+
   String dropCarrera = 'Contador Público';
+  String dropEscuela = 'TECNM';
+  String dropArea = 'Centro de cómputo';
   final format = DateFormat("dd-MM-yyyy");
 
   var dataList;
@@ -121,29 +146,52 @@ class _CartInsertState extends State<CartInsert> {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _nocontrol = TextEditingController();
     final TextEditingController _nombre = TextEditingController();
-    final TextEditingController _apellidoP = TextEditingController();
-    final TextEditingController _apellidoM = TextEditingController();
-    final TextEditingController _correo = TextEditingController();
-    final TextEditingController _fechaNac = TextEditingController();
-    final TextEditingController _id = TextEditingController();
+    final TextEditingController _apaterno = TextEditingController();
+    final TextEditingController _amaterno = TextEditingController();
+    final TextEditingController _escuela = TextEditingController();
+    final TextEditingController _carrera = TextEditingController();
+    final TextEditingController _semestre = TextEditingController();
+    final TextEditingController _hrstotales = TextEditingController();
+    final TextEditingController _telefono = TextEditingController();
+    final TextEditingController _servicio = TextEditingController();
+    final TextEditingController _fechainicio = TextEditingController();
+    final TextEditingController _activo = TextEditingController();
 
     void clear() {
-      dropUser = 'Alumno';
-      dropSexo = 'Masculino';
-      dropCarrera = 'Contador Público';
+      String dropCarrera = 'Contador Público';
+      String dropEscuela = 'TECNM';
+      String dropArea = 'Centro de cómputo';
+      _nocontrol.clear();
       _nombre.clear();
-      _apellidoP.clear();
-      _apellidoM.clear();
-      _correo.clear();
-      _fechaNac.clear();
-      _id.clear();
+      _apaterno.clear();
+      _amaterno.clear();
+      _escuela.clear();
+      _carrera.clear();
+      _semestre.clear();
+      _hrstotales.clear();
+      _telefono.clear();
+      _servicio.clear();
+      _fechainicio.clear();
+      _activo.clear();
     }
 
     int cont = 0;
 
     dataList = List.generate(widget.cant,
-            (i) => ['---', '---', '---', '---', '---', '---', '---', '---', '---'],
+            (i) =>
+        [
+          '---',
+          '---',
+          '---',
+          '---',
+          '---',
+          '---',
+          '---',
+          '---',
+          '---'
+        ],
         growable: false);
 
     @override
@@ -159,8 +207,14 @@ class _CartInsertState extends State<CartInsert> {
             children: [
               Container(
                 height: 60,
-                width: MediaQuery.of(context).size.width -
-                    (200 + MediaQuery.of(context).size.height / 7) -200,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width -
+                    (200 + MediaQuery
+                        .of(context)
+                        .size
+                        .height / 7) - 200,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
@@ -175,19 +229,27 @@ class _CartInsertState extends State<CartInsert> {
                         child: DropdownButton<String>(
                           borderRadius: BorderRadius.circular(10),
                           isExpanded: true,
-                          value: dropSexo,
+                          value: dropCarrera,
                           onChanged: (String newValue) {
                             setState(() {
-                              dropSexo = newValue;
+                              dropCarrera = newValue;
                             });
                           },
-                          items: <String>['Masculino', 'Femenino']
+                          items: <String>['Contador Público',
+                            'Licenciatura en Administración',
+                            'Ingeniería en Electrónica',
+                            'Ingeniería en Sistemas Computacionales',
+                            'Ingeniería Industrial',
+                            'Ingeniería en Mecatrónica',
+                            'Ingeniería en Gestión Empresarial',
+                            'Ingeniería Civil']
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(
                                 value,
-                                style: Theme.of(context)
+                                style: Theme
+                                    .of(context)
                                     .textTheme
                                     .subtitle1
                                     .copyWith(color: Colors.black54),
@@ -208,19 +270,20 @@ class _CartInsertState extends State<CartInsert> {
                         child: DropdownButton<String>(
                           borderRadius: BorderRadius.circular(10),
                           isExpanded: true,
-                          value: dropUser,
+                          value: dropEscuela,
                           onChanged: (String newValue) {
                             setState(() {
-                              dropUser = newValue;
+                              dropEscuela = newValue;
                             });
                           },
-                          items: <String>['Alumno', 'Maestro']
+                          items: <String>['TECNM', 'CONALEP','COBACH','CBTIS 81']
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(
                                 value,
-                                style: Theme.of(context)
+                                style: Theme
+                                    .of(context)
                                     .textTheme
                                     .subtitle1
                                     .copyWith(color: Colors.black54),
@@ -261,7 +324,8 @@ class _CartInsertState extends State<CartInsert> {
                               value: value,
                               child: Text(
                                 value,
-                                style: Theme.of(context)
+                                style: Theme
+                                    .of(context)
                                     .textTheme
                                     .subtitle1
                                     .copyWith(color: Colors.black54),
@@ -276,8 +340,11 @@ class _CartInsertState extends State<CartInsert> {
                       child: Padding(
                         padding: EdgeInsets.only(left: 5, bottom: 10, top: 10),
                         child: TextFormField(
-                          style: Theme.of(context).textTheme.subtitle1,
-                          controller: _id,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .subtitle1,
+                          controller: _nocontrol,
                           textCapitalization: TextCapitalization.characters,
                           decoration: InputDecoration(
                             labelText: 'Número de control',
@@ -286,7 +353,7 @@ class _CartInsertState extends State<CartInsert> {
                           ),
                           validator: (String value) {
                             if (value.isEmpty)
-                              return 'Porfavor ingrese datos completos';
+                              return 'Ingrese los datos';
                             return null;
                           },
                         ),
@@ -297,16 +364,19 @@ class _CartInsertState extends State<CartInsert> {
                       child: Padding(
                         padding: EdgeInsets.only(left: 5, bottom: 10, top: 10),
                         child: TextFormField(
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .subtitle1,
                           controller: _nombre,
                           decoration: InputDecoration(
-                            labelText: 'Nombre(s)',
+                            labelText: 'Nombre',
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                           ),
                           validator: (String value) {
                             if (value.isEmpty)
-                              return 'Porfavor ingrese datos completos';
+                              return 'Ingrese los datos';
                             return null;
                           },
                         ),
@@ -317,8 +387,11 @@ class _CartInsertState extends State<CartInsert> {
                       child: Padding(
                         padding: EdgeInsets.only(left: 5, bottom: 10, top: 10),
                         child: TextFormField(
-                          style: Theme.of(context).textTheme.subtitle1,
-                          controller: _apellidoP,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .subtitle1,
+                          controller: _apaterno,
                           decoration: InputDecoration(
                             labelText: 'Apellido Paterno',
                             border: OutlineInputBorder(
@@ -326,7 +399,7 @@ class _CartInsertState extends State<CartInsert> {
                           ),
                           validator: (String value) {
                             if (value.isEmpty)
-                              return 'Porfavor ingrese datos completos';
+                              return 'Ingrese los datos';
                             return null;
                           },
                         ),
@@ -337,8 +410,11 @@ class _CartInsertState extends State<CartInsert> {
                       child: Padding(
                         padding: EdgeInsets.only(left: 5, bottom: 10, top: 10),
                         child: TextFormField(
-                          style: Theme.of(context).textTheme.subtitle1,
-                          controller: _apellidoM,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .subtitle1,
+                          controller: _amaterno,
                           decoration: InputDecoration(
                             labelText: 'Apellido Materno',
                             border: OutlineInputBorder(
@@ -346,7 +422,7 @@ class _CartInsertState extends State<CartInsert> {
                           ),
                           validator: (String value) {
                             if (value.isEmpty)
-                              return 'Porfavor ingrese datos completos';
+                              return 'Ingrese los datos';
                             return null;
                           },
                         ),
@@ -357,7 +433,10 @@ class _CartInsertState extends State<CartInsert> {
                       child: Padding(
                         padding: EdgeInsets.only(left: 5, bottom: 10, top: 10),
                         child: TextFormField(
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .subtitle1,
                           controller: _correo,
                           decoration: InputDecoration(
                             labelText: 'Correo',
@@ -415,6 +494,8 @@ class _CartInsertState extends State<CartInsert> {
                         dataList[cont][6] = _apellidoM.text;
                         dataList[cont][7] = _correo.text;
                         dataList[cont][8] = _fechaNac.text;
+                        dataList[cont][9] = _fechaNac.text;
+                        dataList[cont][10] = _fechaNac.text;
                         if (cont == widget.cant - 1) {
                           _changed(true);
                           clear();
@@ -435,8 +516,14 @@ class _CartInsertState extends State<CartInsert> {
           ),
           Container(
             height: 500,
-            width: MediaQuery.of(context).size.width -
-                (MediaQuery.of(context).size.height / 7),
+            width: MediaQuery
+                .of(context)
+                .size
+                .width -
+                (MediaQuery
+                    .of(context)
+                    .size
+                    .height / 7),
             child: visibilityCont
                 ? Container(
               child: VerArray(
@@ -447,8 +534,14 @@ class _CartInsertState extends State<CartInsert> {
           ),
           Container(
             height: 100,
-            width: MediaQuery.of(context).size.width -
-                (MediaQuery.of(context).size.height / 7),
+            width: MediaQuery
+                .of(context)
+                .size
+                .width -
+                (MediaQuery
+                    .of(context)
+                    .size
+                    .height / 7),
             child: visibilityCont
                 ? Padding(
               padding: EdgeInsets.only(left: 20, bottom: 10, top: 10),
@@ -468,8 +561,7 @@ class _CartInsertState extends State<CartInsert> {
   }
 
   Future<bool> createUser(var array) {
-
-    for(int x=0; x<array.length; x++){
+    for (int x = 0; x < array.length; x++) {
       FirebaseFirestore.instance
           .collection('alumnos')
           .doc()
@@ -484,15 +576,11 @@ class _CartInsertState extends State<CartInsert> {
         'hrstotales': array[x][1],
         'servicio': array[x][0],
         'fechainicio': array[x][],
-        'activo':array[x][]
+        'activo': array[x][]
       })
           .then((value) => true)
           .onError((error, stackTrace) => false);
-
     }
-
-
-
   }
 
 
@@ -511,116 +599,231 @@ class _VerArrayState extends State<VerArray> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-          color: Theme.of(context).colorScheme.secondaryVariant,
+          color: Theme
+              .of(context)
+              .colorScheme
+              .secondaryVariant,
           height: 1000,
-          width: MediaQuery.of(context).size.width - 165,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width - 165,
           child: ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
             itemCount: widget.datalist.length,
-            itemBuilder: (context, index) => Row(
-              children: [
-                Container(
-                  width: (MediaQuery.of(context).size.width - (165)) / 10,
-                  child: Card(
-                    color: Theme.of(context).colorScheme.surface,
-                    child: Text(
-                      widget.datalist[index][0],
-                      style: Theme.of(context).textTheme.headline6,
+            itemBuilder: (context, index) =>
+                Row(
+                  children: [
+                    Container(
+                      width: (MediaQuery
+                          .of(context)
+                          .size
+                          .width - (165)) / 10,
+                      child: Card(
+                        color: Theme
+                            .of(context)
+                            .colorScheme
+                            .surface,
+                        child: Text(
+                          widget.datalist[index][0],
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline6,
+                        ),
+                        shadowColor: Theme
+                            .of(context)
+                            .colorScheme
+                            .primary,
+                      ),
                     ),
-                    shadowColor: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                Container(
-                  width: (MediaQuery.of(context).size.width - (165)) / 10,
-                  child: Card(
-                    color: Theme.of(context).colorScheme.surface,
-                    child: Text(
-                      widget.datalist[index][1],
-                      style: Theme.of(context).textTheme.headline6,
+                    Container(
+                      width: (MediaQuery
+                          .of(context)
+                          .size
+                          .width - (165)) / 10,
+                      child: Card(
+                        color: Theme
+                            .of(context)
+                            .colorScheme
+                            .surface,
+                        child: Text(
+                          widget.datalist[index][1],
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline6,
+                        ),
+                        shadowColor: Theme
+                            .of(context)
+                            .colorScheme
+                            .primary,
+                      ),
                     ),
-                    shadowColor: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                Container(
-                  width: (MediaQuery.of(context).size.width - (165)) / 10,
-                  child: Card(
-                    color: Theme.of(context).colorScheme.surface,
-                    child: Text(
-                      widget.datalist[index][2],
-                      style: Theme.of(context).textTheme.headline6,
+                    Container(
+                      width: (MediaQuery
+                          .of(context)
+                          .size
+                          .width - (165)) / 10,
+                      child: Card(
+                        color: Theme
+                            .of(context)
+                            .colorScheme
+                            .surface,
+                        child: Text(
+                          widget.datalist[index][2],
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline6,
+                        ),
+                        shadowColor: Theme
+                            .of(context)
+                            .colorScheme
+                            .primary,
+                      ),
                     ),
-                    shadowColor: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                Container(
-                  width: (MediaQuery.of(context).size.width - (165)) / 10,
-                  child: Card(
-                    color: Theme.of(context).colorScheme.surface,
-                    child: Text(
-                      widget.datalist[index][3],
-                      style: Theme.of(context).textTheme.headline6,
+                    Container(
+                      width: (MediaQuery
+                          .of(context)
+                          .size
+                          .width - (165)) / 10,
+                      child: Card(
+                        color: Theme
+                            .of(context)
+                            .colorScheme
+                            .surface,
+                        child: Text(
+                          widget.datalist[index][3],
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline6,
+                        ),
+                        shadowColor: Theme
+                            .of(context)
+                            .colorScheme
+                            .primary,
+                      ),
                     ),
-                    shadowColor: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                Container(
-                  width: (MediaQuery.of(context).size.width - (165)) / 10,
-                  child: Card(
-                    color: Theme.of(context).colorScheme.surface,
-                    child: Text(
-                      widget.datalist[index][4],
-                      style: Theme.of(context).textTheme.headline6,
+                    Container(
+                      width: (MediaQuery
+                          .of(context)
+                          .size
+                          .width - (165)) / 10,
+                      child: Card(
+                        color: Theme
+                            .of(context)
+                            .colorScheme
+                            .surface,
+                        child: Text(
+                          widget.datalist[index][4],
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline6,
+                        ),
+                        shadowColor: Theme
+                            .of(context)
+                            .colorScheme
+                            .primary,
+                      ),
                     ),
-                    shadowColor: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                Container(
-                  width: (MediaQuery.of(context).size.width - (165)) / 10,
-                  child: Card(
-                    color: Theme.of(context).colorScheme.surface,
-                    child: Text(
-                      widget.datalist[index][5],
-                      style: Theme.of(context).textTheme.headline6,
+                    Container(
+                      width: (MediaQuery
+                          .of(context)
+                          .size
+                          .width - (165)) / 10,
+                      child: Card(
+                        color: Theme
+                            .of(context)
+                            .colorScheme
+                            .surface,
+                        child: Text(
+                          widget.datalist[index][5],
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline6,
+                        ),
+                        shadowColor: Theme
+                            .of(context)
+                            .colorScheme
+                            .primary,
+                      ),
                     ),
-                    shadowColor: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                Container(
-                  width: (MediaQuery.of(context).size.width - (165)) / 10,
-                  child: Card(
-                    color: Theme.of(context).colorScheme.surface,
-                    child: Text(
-                      widget.datalist[index][6],
-                      style: Theme.of(context).textTheme.headline6,
+                    Container(
+                      width: (MediaQuery
+                          .of(context)
+                          .size
+                          .width - (165)) / 10,
+                      child: Card(
+                        color: Theme
+                            .of(context)
+                            .colorScheme
+                            .surface,
+                        child: Text(
+                          widget.datalist[index][6],
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline6,
+                        ),
+                        shadowColor: Theme
+                            .of(context)
+                            .colorScheme
+                            .primary,
+                      ),
                     ),
-                    shadowColor: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                Container(
-                  width: ((MediaQuery.of(context).size.width - (165)) / 10) * 2,
-                  child: Card(
-                    color: Theme.of(context).colorScheme.surface,
-                    child: Text(
-                      widget.datalist[index][7],
-                      style: Theme.of(context).textTheme.headline6,
+                    Container(
+                      width: ((MediaQuery
+                          .of(context)
+                          .size
+                          .width - (165)) / 10) * 2,
+                      child: Card(
+                        color: Theme
+                            .of(context)
+                            .colorScheme
+                            .surface,
+                        child: Text(
+                          widget.datalist[index][7],
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline6,
+                        ),
+                        shadowColor: Theme
+                            .of(context)
+                            .colorScheme
+                            .primary,
+                      ),
                     ),
-                    shadowColor: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                Container(
-                  width: (MediaQuery.of(context).size.width - (165)) / 10,
-                  child: Card(
-                    color: Theme.of(context).colorScheme.surface,
-                    child: Text(
-                      widget.datalist[index][8],
-                      style: Theme.of(context).textTheme.headline6,
+                    Container(
+                      width: (MediaQuery
+                          .of(context)
+                          .size
+                          .width - (165)) / 10,
+                      child: Card(
+                        color: Theme
+                            .of(context)
+                            .colorScheme
+                            .surface,
+                        child: Text(
+                          widget.datalist[index][8],
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline6,
+                        ),
+                        shadowColor: Theme
+                            .of(context)
+                            .colorScheme
+                            .primary,
+                      ),
                     ),
-                    shadowColor: Theme.of(context).colorScheme.primary,
-                  ),
+                  ],
                 ),
-              ],
-            ),
           ),
         ));
   }
