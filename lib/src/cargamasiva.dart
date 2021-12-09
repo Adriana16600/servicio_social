@@ -480,10 +480,11 @@ class _CartInsertState extends State<CartInsert> {
                         dataList[cont][4] = _nombre.text;
                         dataList[cont][5] = _apaterno.text;
                         dataList[cont][6] = _amaterno.text;
-                        dataList[cont][7] = _escuela.text;
-                        dataList[cont][8] = _carrera.text;
-                        dataList[cont][9] = _semestre.text;
-                        dataList[cont][10] = _hrstotales.text;
+                        dataList[cont][7] = _semestre.text;
+                        dataList[cont][8] = _hrstotales.text;
+                        dataList[cont][9] = _telefono.text;
+                        dataList[cont][10] = _fechainicio.text;
+                        dataList[cont][11] = _activo.text;
                         if (cont == widget.cant - 1) {
                           _changed(true);
                           clear();
@@ -554,17 +555,17 @@ class _CartInsertState extends State<CartInsert> {
           .collection('alumnos')
           .doc()
           .set({
-        'nocontrol': array[x][4],
-        'nombre': array[x][6],
+        'nocontrol': array[x][3],
+        'nombre': array[x][4],
         'apaterno': array[x][5],
-        'amaterno': array[x][2],
-        'escuela': array[x][7],
-        'carrera': array[x][8],
-        'semestre': array[x][3],
-        'hrstotales': array[x][1],
-        'servicio': array[x][0],
-        'fechainicio': array[x][],
-        'activo': array[x][]
+        'amaterno': array[x][6],
+        'escuela': array[x][0],
+        'carrera': array[x][1],
+        'semestre': array[x][7],
+        'hrstotales': array[x][8],
+        'servicio': array[x][2],
+        'fechainicio': array[x][10],
+        'activo': array[x][11]
       })
           .then((value) => true)
           .onError((error, stackTrace) => false);
