@@ -117,7 +117,6 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                 child: ElevatedButton(
                   child: Text('Entrar'),
                   onPressed: () {
-                    onPressed:
                     control != ''
                         ? () {
                             FirebaseFirestore.instance

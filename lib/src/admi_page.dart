@@ -59,7 +59,7 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
                   ));
             },
             icon: Icon(
-              Icons.person_add_alt_1_rounded,
+              Icons.group_add,
             ),
           ),
           IconButton(

@@ -1,4 +1,3 @@
-/*
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -475,15 +474,17 @@ class _CartInsertState extends State<CartInsert> {
           .collection('alumnos')
           .doc()
           .set({
-        'nombre': array[x][4],
-        'apellido_materno': array[x][6],
-        'apellido_paterno': array[x][5],
-        'carrera': array[x][2],
-        'correo': array[x][7],
-        'fecha_nacimiento': array[x][8],
-        'id_usuario': array[x][3],
-        'tipo_usuario': array[x][1],
-        'sexo': array[x][0],
+        'nocontrol': array[x][4],
+        'nombre': array[x][6],
+        'apaterno': array[x][5],
+        'amaterno': array[x][2],
+        'escuela': array[x][7],
+        'carrera': array[x][8],
+        'semestre': array[x][3],
+        'hrstotales': array[x][1],
+        'servicio': array[x][0],
+        'fechainicio': array[x][],
+        'activo':array[x][]
       })
           .then((value) => true)
           .onError((error, stackTrace) => false);
@@ -624,4 +625,3 @@ class _VerArrayState extends State<VerArray> {
         ));
   }
 }
-*/
