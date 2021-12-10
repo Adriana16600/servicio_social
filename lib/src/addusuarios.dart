@@ -104,7 +104,7 @@ class _AddUsuariosState extends State<AddUsuarios> {
               ElevatedButton(
                 child: Text('Agregar'),
                 onPressed: () {
-                  FirebaseFirestore.instance.collection('escuelas').doc().set({
+                  FirebaseFirestore.instance.collection('usuarios').doc().set({
                     'nombre': usuarioname,
                     'usuario':usuario,
                     'nip':clave,
