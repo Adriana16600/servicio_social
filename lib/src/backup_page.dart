@@ -1,19 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:servicio_social/src/excel.dart';
+import 'package:servicio_social/src/excelBackup.dart';
 import 'package:firebase_backup_restore/results.dart';
 import 'package:firebase_backup_restore/firebase_backup_restore.dart';
 
-class BackupPage extends StatefulWidget {
-  const BackupPage({Key key}) : super(key: key);
+class BackupPage extends StatelessWidget {
+  final DocumentSnapshot alumno;
 
-  @override
+  const BackupPage({Key key, this.alumno}) : super(key: key);
+
+  /*@override
   _BackupPageState createState() => _BackupPageState();
 }
 
 class _BackupPageState extends State<BackupPage> {
-  /*void main() async {
+  void main() async {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
     runApp(MyApp());
@@ -35,7 +37,7 @@ class _BackupPageState extends State<BackupPage> {
               icon: Icons.cloud_upload,
               text: 'Crear copia de la base de datos',
               onTap: () async {
-                await FirebaseBackupRestore().backupAll();
+                ExportB().exportarBackup(context, alumno);
               }),
           HugeButton(
               color: Theme.of(context).colorScheme.primary,
@@ -48,6 +50,8 @@ class _BackupPageState extends State<BackupPage> {
       ),
     );
   }
+
+
 }
 
 class HugeButton extends StatelessWidget {

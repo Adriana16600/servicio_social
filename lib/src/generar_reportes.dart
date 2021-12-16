@@ -13,49 +13,67 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:servicio_social/src/excelAcep.dart';
+import 'package:servicio_social/src/excelAct.dart';
+import 'package:servicio_social/src/excelTerm.dart';
+import 'excel.dart';
 
-class ReportesPage extends StatefulWidget {
-  const ReportesPage({Key key}) : super(key: key);
+class ReportesPage extends StatelessWidget {
+  final DocumentSnapshot alumnot;
 
-  @override
-  _ReportesPageState createState() => _ReportesPageState();
-}
+  const ReportesPage({Key key, @required this.alumnot}) : super(key: key);
 
-class _ReportesPageState extends State<ReportesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Generar reportes'),
-        actions: [
-        ],
-      ),
-      body: Row(
-        children: [
-          HugeButton(
-              color: Theme.of(context).colorScheme.primary,
-              icon: Icons.import_contacts,
-              text: 'Carta de aceptación',
-              onTap: () async {
-                final pdf = pw.Document();
-
-                pdf.addPage(pw.Page(
-                    pageFormat: PdfPageFormat.a4,
-                    build: (pw.Context context) {
-                      return pw.Center(
-                        child: pw.Text("Carta de aceptación"),
-                      ); // Center
-                    })); // Page
-
-                final file = File("Carta de aceptación.pdf");
-                await file.writeAsBytes(await pdf.save());
-                /*await launch(
+        appBar: AppBar(
+          title: Text('Generar reportes'),
+          actions: [
+          ],
+        ),
+        body: ListView(
+            children: [
+        Padding(
+        padding: const EdgeInsets.only(top: 20, bottom: 10, left: 20),
+        child: Text(
+          'Desacargar documentos',
+          style: Theme
+              .of(context)
+              .textTheme
+              .subtitle1,
+        ),),
+              /*Container(
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                child: TextFormField(
+                  maxLength: 10,
+                  //controller: act1C,
+                  onChanged: (value) {
+                    setState(() {
+                      ncontrol = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Actividad a desarrollar',
+                    border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  ),
+                ),
+              ),*/
+        Row(
+          children: [
+            HugeButton(
+                color: Theme.of(context).colorScheme.primary,
+                icon: Icons.import_contacts,
+                text: 'Carta de aceptación',
+                onTap: () async {
+                  ExportAcept().exportarAceptAlumnos(context,alumnot);
+                  /*await launch(
                   url,
                   forceSafariVC: false,
                   forceWebView: false,
                   headers: <String, String>{'my_header_key': 'my_header_value'},
                 )*/
-                /*final pdf = pw.Document();
+                  /*final pdf = pw.Document();
                 Uint8List fontData = File('ProximaNova-Black.ttf').readAsBytesSync();
                 var data = fontData.buffer.asByteData();
                 pdf.addPage(
@@ -75,14 +93,30 @@ class _ReportesPageState extends State<ReportesPage> {
                   html.document.body.children.add(anchor);
 
                 });*/
-              }),
-          HugeButton(
-              color: Theme.of(context).colorScheme.primary,
-              icon: Icons.menu_book,
-              text: 'Carta de terminación',
-              onTap: () {})
-        ],
-      ),
+                }),
+            HugeButton(
+                color: Theme.of(context).colorScheme.primary,
+                icon: Icons.menu_book,
+                text: 'Carta de terminación',
+                onTap: () {
+                  ExportTerminacion().exportarTerminacionAlumnos(context,alumnot);
+                }),
+            HugeButton(
+                color: Theme.of(context).colorScheme.primary,
+                icon: Icons.pending_actions,
+                text: 'Reporte de actividades',
+                onTap: () {
+                  ExportActi().exportarActi(context,alumnot);
+                })
+          ],
+        )
+
+
+
+    ]
+    ,
+    )
+    ,
     );
   }
 }
@@ -116,14 +150,20 @@ class HugeButton extends StatelessWidget {
                 color: color, borderRadius: BorderRadius.circular(1000)),
             child: Icon(
               icon,
-              color: Theme.of(context).colorScheme.onPrimary,
+              color: Theme
+                  .of(context)
+                  .colorScheme
+                  .onPrimary,
               size: 200,
             ),
           ),
         ),
         Text(
           text,
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme
+              .of(context)
+              .textTheme
+              .headline6,
         )
       ],
     );

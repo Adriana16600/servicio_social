@@ -3,8 +3,8 @@ import 'package:excel/excel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
-class Export {
-  exportarHistorialAlumno(BuildContext context, DocumentSnapshot alumno) async {
+class ExportB {
+  exportarBackup(BuildContext context, DocumentSnapshot alumno) async {
     Excel excel = Excel.createExcel();
     Sheet sheetObject;
     sheetObject = excel['Sheet1'];
@@ -15,10 +15,10 @@ class Export {
       'd',
     ];
     var titles = [
-      'Dia', //a
-      'Entrada', //b
-      'Salida', //c
-      'Total hrs' //d
+      'Nombre', //a
+      'Apellido paterno', //b
+      'Apellido Materno', //c
+      'Escuela' //d
     ];
 
     //String sum ='';
@@ -28,16 +28,18 @@ class Export {
           titles[i];
     }
 
-    sheetObject.cell(CellIndex.indexByString("a1")).value = 'nombre';
-    sheetObject.cell(CellIndex.indexByString("b1")).value =
-        '${alumno['nombre']} ${alumno['apaterno']}${alumno['amaterno']}';
-    sheetObject.cell(CellIndex.indexByString("c1")).value = 'control';
-    sheetObject.cell(CellIndex.indexByString("d1")).value = alumno['nocontrol'];
-    sheetObject.cell(CellIndex.indexByString("e1")).value = 'carrera';
-    sheetObject.cell(CellIndex.indexByString("f1")).value = alumno['carrera'];
-    //sheetObject.cell(CellIndex.indexByString("g1")).value = 'Total de horas'; sum;
+    for (int i = 0; i < titles.length; i++) {
+      sheetObject.cell(CellIndex.indexByString("A${i + 3}")).value = '${alumno['nocontrol']}';
+      sheetObject.cell(CellIndex.indexByString("B${i + 3}")).value = '${alumno['nombre']}';
+      sheetObject.cell(CellIndex.indexByString("C${i + 3}")).value = '${alumno['apaterno']}';
+      sheetObject.cell(CellIndex.indexByString("D${i + 3}")).value = '${alumno['amaterno']}';
+      sheetObject.cell(CellIndex.indexByString("E${i + 3}")).value = '${alumno['escuela']}';
+      sheetObject.cell(CellIndex.indexByString("F${i + 3}")).value = '${alumno['carrera']}';
+      sheetObject.cell(CellIndex.indexByString("G${i + 3}")).value = '${alumno['semestre']}';
+      sheetObject.cell(CellIndex.indexByString("H${i + 3}")).value = '${alumno['servicio']}';
+    }
 
-    List<DocumentSnapshot> devices = await FirebaseFirestore.instance
+    /*List<DocumentSnapshot> devices = await FirebaseFirestore.instance
         .collection('alumnos')
         .doc(alumno.id)
         .collection('registros')
@@ -64,9 +66,7 @@ class Export {
       sheetObject.cell(CellIndex.indexByString("D${i + 3}")).value = difference;
 
       //sum=difference+difference;
-    }
-
-
+    }*/
 
     excel.save(fileName: 'reporte.xlsx');
     // Navigator.pop(context);

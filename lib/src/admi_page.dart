@@ -13,7 +13,9 @@ import 'package:flutter_search_bar/flutter_search_bar.dart';
 class TablaAlumnos extends StatefulWidget {
   //final DocumentSnapshot admi;
 
-  const TablaAlumnos({Key key,}) : super(key: key);
+  const TablaAlumnos({
+    Key key,
+  }) : super(key: key);
 
   //const TablaAlumnos({Key key, @required this.admi}) : super(key: key);
 
@@ -157,10 +159,23 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
                           context: context,
                           builder: (context) {
                             return AlertDialog(
+
                               title: Text(
                                   '${snapshot.data.docs[index]['nombre']} ${snapshot.data.docs[index]['apaterno']} ${snapshot.data.docs[index]['amaterno']}'),
-                              content: Text(
-                                  '${snapshot.data.docs[index]['nocontrol']}\n${snapshot.data.docs[index]['escuela']}\n${snapshot.data.docs[index]['carrera']}\nSemestre ${snapshot.data.docs[index]['semestre']}\nTeléfono: ${snapshot.data.docs[index]['telefono']}\nÁrea: ${snapshot.data.docs[index]['servicio']}\nFecha de inicio: ${date(date: snapshot.data.docs[index]['fechainicio'], format: 'dd  MMMM yyy')}\nHoras totales: ${snapshot.data.docs[index]['hrstotales']} \nHoras acumuladas:'),
+                              content: FutureBuilder(
+                                  future: FirebaseFirestore.instance
+                                      .collection('alumnos')
+                                      .doc(snapshot.data.docs[index].id)
+                                      .collection('registros')
+                                      .get(),
+                                  builder: (context, todo) {
+                                    for(int i = 0; i<todo.data.docs.lenght;i++){
+
+                                    }
+                                  return Text(
+                                      '${snapshot.data.docs[index]['nocontrol']}\n${snapshot.data.docs[index]['escuela']}\n${snapshot.data.docs[index]['carrera']}\nSemestre ${snapshot.data.docs[index]['semestre']}\nTeléfono: ${snapshot.data.docs[index]['telefono']}\nÁrea: ${snapshot.data.docs[index]['servicio']}\nFecha de inicio: ${date(date: snapshot.data.docs[index]['fechainicio'], format: 'dd  MMMM yyy')}\nHoras totales: ${snapshot.data.docs[index]['hrstotales']} \nHoras acumuladas:');
+                                }
+                              ),
                               actions: [
                                 TextButton(
                                     onPressed: () {
@@ -179,8 +194,16 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
                         );
                         //print('Hola $index');
                       },
-                      subtitle: Text(
-                          '${snapshot.data.docs[index]['nocontrol']} \n ${snapshot.data.docs[index]['escuela']} \n ${date(date: snapshot.data.docs[index]['fechainicio'], format: 'dd  MMMM yyy')}'),
+                      subtitle: FutureBuilder(
+                          future: FirebaseFirestore.instance
+                              .collection('alumnos')
+                              .doc(snapshot.data.docs[index].id)
+                              .collection('registros')
+                              .get(),
+                          builder: (context, todo) {
+                            return Text(
+                                '${snapshot.data.docs[index]['nocontrol']} \n ${snapshot.data.docs[index]['escuela']} \n ${date(date: snapshot.data.docs[index]['fechainicio'], format: 'dd  MMMM yyy')}');
+                          }),
                       title: Text(
                           '${snapshot.data.docs[index]['nombre']} ${snapshot.data.docs[index]['apaterno']} ${snapshot.data.docs[index]['amaterno']}'),
                       trailing: IconButton(
