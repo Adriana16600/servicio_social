@@ -159,7 +159,6 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
                           context: context,
                           builder: (context) {
                             return AlertDialog(
-
                               title: Text(
                                   '${snapshot.data.docs[index]['nombre']} ${snapshot.data.docs[index]['apaterno']} ${snapshot.data.docs[index]['amaterno']}'),
                               content: FutureBuilder(
@@ -169,13 +168,19 @@ class _TablaAlumnosState extends State<TablaAlumnos> {
                                       .collection('registros')
                                       .get(),
                                   builder: (context, todo) {
-                                    for(int i = 0; i<todo.data.docs.lenght;i++){
+                                    if (!todo.hasData) return Text('...');
 
+                                    double horas = 0;
+                                    for (int i = 0;
+                                        i < todo.data.docs.length;
+                                        i++) {
+                                      horas = horas +
+                                          todo.data.docs[i]['total_hrs'];
                                     }
-                                  return Text(
-                                      '${snapshot.data.docs[index]['nocontrol']}\n${snapshot.data.docs[index]['escuela']}\n${snapshot.data.docs[index]['carrera']}\nSemestre ${snapshot.data.docs[index]['semestre']}\nTeléfono: ${snapshot.data.docs[index]['telefono']}\nÁrea: ${snapshot.data.docs[index]['servicio']}\nFecha de inicio: ${date(date: snapshot.data.docs[index]['fechainicio'], format: 'dd  MMMM yyy')}\nHoras totales: ${snapshot.data.docs[index]['hrstotales']} \nHoras acumuladas:');
-                                }
-                              ),
+
+                                    return Text(
+                                        '${snapshot.data.docs[index]['nocontrol']}\n${snapshot.data.docs[index]['escuela']}\n${snapshot.data.docs[index]['carrera']}\nSemestre ${snapshot.data.docs[index]['semestre']}\nTeléfono: ${snapshot.data.docs[index]['telefono']}\nÁrea: ${snapshot.data.docs[index]['servicio']}\nFecha de inicio: ${date(date: snapshot.data.docs[index]['fechainicio'], format: 'dd  MMMM yyy')}\nHoras acumuladas:$horas');
+                                  }),
                               actions: [
                                 TextButton(
                                     onPressed: () {
