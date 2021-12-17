@@ -18,9 +18,9 @@ import 'excel.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class ReportesPage extends StatefulWidget {
-
-
-  const ReportesPage({Key key, }) : super(key: key);
+  const ReportesPage({
+    Key key,
+  }) : super(key: key);
 
   @override
   State<ReportesPage> createState() => _ReportesPageState();
@@ -68,17 +68,21 @@ class _ReportesPageState extends State<ReportesPage> {
                   icon: Icons.import_contacts,
                   text: 'Carta de aceptación',
                   onTap: () async {
-
                     FirebaseFirestore.instance
                         .collection('alumnos')
                         .where('nocontrol', isEqualTo: control)
                         .get()
                         .then((value) {
-                          if(value.size!=0){
-                            ExportAcept()
-                                .exportarAceptAlumnos(context, '${value.docs[0]['nombre']} ${value.docs[0]['apaterno']} ${value.docs[0]['amaterno']}','${value.docs[0]['nocontrol']}');
-                          }
-
+                      if (value.size != 0) {
+                        ExportAcept().exportarAceptAlumnos(
+                            context,
+                            '${value.docs[0]['nombre']} ${value.docs[0]['apaterno']} ${value.docs[0]['amaterno']}',
+                            '${value.docs[0]['nocontrol']}',
+                            '${value.docs[0]['carrera']}',
+                            '${value.docs[0]['servicio']}',
+                            '${value.docs[0]['fechainicio']}',
+                            '${value.docs[0]['hrstotales']}');
+                      }
                     });
                     /*await launch(
                   url,
@@ -117,11 +121,12 @@ class _ReportesPageState extends State<ReportesPage> {
                         .where('nocontrol', isEqualTo: control)
                         .get()
                         .then((value) {
-                      if(value.size!=0){
-                        ExportTerminacion()
-                            .exportarTerminacionAlumnos(context, '${value.docs[0]['nombre']} ${value.docs[0]['apaterno']} ${value.docs[0]['amaterno']}','${value.docs[0]['servicio']}');
+                      if (value.size != 0) {
+                        ExportTerminacion().exportarTerminacionAlumnos(
+                            context,
+                            '${value.docs[0]['nombre']} ${value.docs[0]['apaterno']} ${value.docs[0]['amaterno']}',
+                            '${value.docs[0]['servicio']}');
                       }
-
                     });
                   }),
               HugeButton(
