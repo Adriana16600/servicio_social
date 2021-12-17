@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 class ExportAcept {
-  exportarAceptAlumnos(BuildContext context, DocumentSnapshot alumnot) async {
+  exportarAceptAlumnos(BuildContext context, String nombre, String nocontrol) async {
     Excel excel = Excel.createExcel();
     Sheet sheetObject;
     sheetObject = excel['Sheet1'];
@@ -29,7 +29,7 @@ class ExportAcept {
     sheetObject.cell(CellIndex.indexByString("f5")).value = 'AT’N: M.A. EDGARCOTA VALENZUELA';
     sheetObject.cell(CellIndex.indexByString("f6")).value = 'JEFE DEL DEPARTAMENTO DE ';
     sheetObject.cell(CellIndex.indexByString("f7")).value = 'GESTIÓN TECNOLÓGICA Y VINCULACIÓN';
-    sheetObject.cell(CellIndex.indexByString("a8")).value = 'Por medio de la presente me permito informarle que el C.';
+    sheetObject.cell(CellIndex.indexByString("a8")).value = 'Por medio de la presente me permito informarle que el C.$nombre';
 
     /*List<DocumentSnapshot> devices = await FirebaseFirestore.instance
         .collection('alumnos')

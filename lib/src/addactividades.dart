@@ -86,7 +86,6 @@ class _AddActState extends State<AddAct> {
           Container(
             margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: TextFormField(
-              maxLength: 10,
               //controller: act1C,
               onChanged: (value) {
                 setState(() {
@@ -103,7 +102,6 @@ class _AddActState extends State<AddAct> {
           Container(
             margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: TextFormField(
-              maxLength: 10,
               //controller: act1C,
               onChanged: (value) {
                 setState(() {
@@ -120,7 +118,6 @@ class _AddActState extends State<AddAct> {
           Container(
             margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: TextFormField(
-              maxLength: 10,
               //controller: act1C,
               onChanged: (value) {
                 setState(() {
@@ -137,7 +134,6 @@ class _AddActState extends State<AddAct> {
           Container(
             margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: TextFormField(
-              maxLength: 10,
               //controller: act1C,
               onChanged: (value) {
                 setState(() {

@@ -52,12 +52,44 @@ class _VerEscuelasState extends State<VerEscuelas> {
                   children: [
                     ListTile(
                       onTap: () {
-                        print('Hola $index');
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text(
+                                  'Atención'),
+                              content: FutureBuilder(
+                                  future: FirebaseFirestore.instance
+                                      .collection('escuelas')
+                                      .doc(snapshot.data.docs[index].id)
+                                      .get(),
+                                  builder: (context, todo) {
+                                    if (!todo.hasData) return Text('...');
+                                    return Text(
+                                        '¿Quiere editar ${snapshot.data.docs[index]['escuelaname']}?');
+                                  }),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                //DatosAlumno: snapshot.data.docs[index],
+                                                AddEscuela(),
+                                          ));
+                                    },
+                                    child: Text('Editar'))
+                              ],
+                            );
+                          },
+                        );
+                        //print('Hola $index');
                       },
                       subtitle: Text(
                           'Dirección: ${snapshot.data.docs[index]['direccion']}\nTeléfono: ${snapshot.data.docs[index]['telefono']}\nHoras de Servicio Social: ${snapshot.data.docs[index]['horas']}'),
-                      title: Text(
-                          '${snapshot.data.docs[index]['escuelaname']}'),
+                      title:
+                          Text('${snapshot.data.docs[index]['escuelaname']}'),
                       trailing: IconButton(
                         tooltip: 'Archivar',
                         onPressed: () {

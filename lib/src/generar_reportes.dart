@@ -9,71 +9,84 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'dart:html' as html;
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:excel/excel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:servicio_social/src/excelAcep.dart';
 import 'package:servicio_social/src/excelAct.dart';
-import 'package:servicio_social/src/excelTerm.dart';
+import 'package:servicio_social/src/excel_term.dart';
 import 'excel.dart';
+import 'package:firebase_database/firebase_database.dart';
 
-class ReportesPage extends StatelessWidget {
-  final DocumentSnapshot alumnot;
+class ReportesPage extends StatefulWidget {
 
-  const ReportesPage({Key key, @required this.alumnot}) : super(key: key);
+
+  const ReportesPage({Key key, }) : super(key: key);
+
+  @override
+  State<ReportesPage> createState() => _ReportesPageState();
+}
+
+class _ReportesPageState extends State<ReportesPage> {
+  String control = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Generar reportes'),
-          actions: [
-          ],
-        ),
-        body: ListView(
-            children: [
-        Padding(
-        padding: const EdgeInsets.only(top: 20, bottom: 10, left: 20),
-        child: Text(
-          'Desacargar documentos',
-          style: Theme
-              .of(context)
-              .textTheme
-              .subtitle1,
-        ),),
-              /*Container(
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                child: TextFormField(
-                  maxLength: 10,
-                  //controller: act1C,
-                  onChanged: (value) {
-                    setState(() {
-                      ncontrol = value;
-                    });
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Actividad a desarrollar',
-                    border:
+      appBar: AppBar(
+        title: Text('Generar reportes'),
+        actions: [],
+      ),
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 20, bottom: 10, left: 20),
+            child: Text(
+              'Ingrese el número de control del alumno, NOTA: Si no lo ingresa no podrá descargar el documento',
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            child: TextFormField(
+              //controller: act1C,
+              onChanged: (value) {
+                setState(() {
+                  control = value;
+                });
+              },
+              decoration: InputDecoration(
+                labelText: 'Número de control del alumno',
+                border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                  ),
-                ),
-              ),*/
-        Row(
-          children: [
-            HugeButton(
-                color: Theme.of(context).colorScheme.primary,
-                icon: Icons.import_contacts,
-                text: 'Carta de aceptación',
-                onTap: () async {
-                  ExportAcept().exportarAceptAlumnos(context,alumnot);
-                  /*await launch(
+              ),
+            ),
+          ),
+          Row(
+            children: [
+              HugeButton(
+                  color: Theme.of(context).colorScheme.primary,
+                  icon: Icons.import_contacts,
+                  text: 'Carta de aceptación',
+                  onTap: () async {
+
+                    FirebaseFirestore.instance
+                        .collection('alumnos')
+                        .where('nocontrol', isEqualTo: control)
+                        .get()
+                        .then((value) {
+                          if(value.size!=0){
+                            ExportAcept()
+                                .exportarAceptAlumnos(context, '${value.docs[0]['nombre']} ${value.docs[0]['apaterno']} ${value.docs[0]['amaterno']}','${value.docs[0]['nocontrol']}');
+                          }
+
+                    });
+                    /*await launch(
                   url,
                   forceSafariVC: false,
                   forceWebView: false,
                   headers: <String, String>{'my_header_key': 'my_header_value'},
                 )*/
-                  /*final pdf = pw.Document();
+                    /*final pdf = pw.Document();
                 Uint8List fontData = File('ProximaNova-Black.ttf').readAsBytesSync();
                 var data = fontData.buffer.asByteData();
                 pdf.addPage(
@@ -93,30 +106,35 @@ class ReportesPage extends StatelessWidget {
                   html.document.body.children.add(anchor);
 
                 });*/
-                }),
-            HugeButton(
-                color: Theme.of(context).colorScheme.primary,
-                icon: Icons.menu_book,
-                text: 'Carta de terminación',
-                onTap: () {
-                  ExportTerminacion().exportarTerminacionAlumnos(context,alumnot);
-                }),
-            HugeButton(
-                color: Theme.of(context).colorScheme.primary,
-                icon: Icons.pending_actions,
-                text: 'Reporte de actividades',
-                onTap: () {
-                  ExportActi().exportarActi(context,alumnot);
-                })
-          ],
-        )
+                  }),
+              HugeButton(
+                  color: Theme.of(context).colorScheme.primary,
+                  icon: Icons.menu_book,
+                  text: 'Carta de terminación',
+                  onTap: () {
+                    FirebaseFirestore.instance
+                        .collection('alumnos')
+                        .where('nocontrol', isEqualTo: control)
+                        .get()
+                        .then((value) {
+                      if(value.size!=0){
+                        ExportTerminacion()
+                            .exportarTerminacionAlumnos(context, '${value.docs[0]['nombre']} ${value.docs[0]['apaterno']} ${value.docs[0]['amaterno']}','${value.docs[0]['servicio']}');
+                      }
 
-
-
-    ]
-    ,
-    )
-    ,
+                    });
+                  }),
+              HugeButton(
+                  color: Theme.of(context).colorScheme.primary,
+                  icon: Icons.pending_actions,
+                  text: 'Reporte de actividades',
+                  onTap: () {
+                    ExportActi().exportarActi(context, null);
+                  })
+            ],
+          )
+        ],
+      ),
     );
   }
 }
@@ -150,20 +168,14 @@ class HugeButton extends StatelessWidget {
                 color: color, borderRadius: BorderRadius.circular(1000)),
             child: Icon(
               icon,
-              color: Theme
-                  .of(context)
-                  .colorScheme
-                  .onPrimary,
+              color: Theme.of(context).colorScheme.onPrimary,
               size: 200,
             ),
           ),
         ),
         Text(
           text,
-          style: Theme
-              .of(context)
-              .textTheme
-              .headline6,
+          style: Theme.of(context).textTheme.headline6,
         )
       ],
     );

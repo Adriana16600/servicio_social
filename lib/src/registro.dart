@@ -283,7 +283,7 @@ class _RegistroPageState extends State<RegistroPage> {
                       onChanged: (String newValue) {
                         setState(() {
                           _btn2SelectedVal3 = newValue;
-                          escuela = newValue;
+                          carrera = newValue;
                         });
                       },
                       items: _dropDownMenuItems3,

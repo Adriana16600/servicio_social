@@ -130,6 +130,30 @@ class _AddEscuelaState extends State<AddEscuela> {
                       'activo': activo
                     });
                     Navigator.pop(context);
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text(
+                              'Agregado'),
+                          content: Text(
+                              'Consulte en la pestaña Agregar escuelas > Ver lista de escuelas'),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                        //DatosAlumno: snapshot.data.docs[index],
+                                        AddEscuela(),
+                                      ));
+                                },
+                                child: Text('OK'))
+                          ],
+                        );
+                      },
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal:100),
