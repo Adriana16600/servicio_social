@@ -134,7 +134,18 @@ class _ReportesPageState extends State<ReportesPage> {
                   icon: Icons.pending_actions,
                   text: 'Reporte de actividades',
                   onTap: () {
-                    ExportActi().exportarActi(context, null);
+                    FirebaseFirestore.instance
+                        .collection('alumnos')
+                        .where('nocontrol', isEqualTo: control)
+                        .get()
+                        .then((value) {
+                      if (value.size != 0) {
+                        ExportActi().exportarActi(
+                            context,
+                            '${value.docs[0]['nombre']} ${value.docs[0]['apaterno']} ${value.docs[0]['amaterno']}',
+                            '${value.docs[0]['servicio']}','${value.docs[0]['carrera']}','${value.docs[0]['nocontrol']}');
+                      }
+                    });
                   })
             ],
           )

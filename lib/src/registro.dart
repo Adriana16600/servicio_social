@@ -356,7 +356,6 @@ class _RegistroPageState extends State<RegistroPage> {
           Container(
             margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: TextFormField(
-              maxLength: 10,
               controller: telefonoC,
               onChanged: (value) {
                 setState(() {
@@ -365,8 +364,8 @@ class _RegistroPageState extends State<RegistroPage> {
               },
               decoration: InputDecoration(
                 labelText: 'Teléfono',
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10)),
               ),
             ),
           ),
@@ -412,6 +411,7 @@ class _RegistroPageState extends State<RegistroPage> {
                   'semestre': semestre,
                   'hrstotales': hrstotales,
                   'servicio': servicio,
+                  'telefono': telefono,
                   'fechainicio': fechainicio,
                   'activo': activo
                 });
