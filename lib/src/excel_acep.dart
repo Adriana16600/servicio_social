@@ -24,7 +24,7 @@ class ExportAcept {
     sheetObject.cell(CellIndex.indexByString("e1")).value = 'Agua Prieta, Sonora';//this.date(date: 'dd MM yyy');
     sheetObject.cell(CellIndex.indexByString("f1")).value = '=HOY()';
     sheetObject.cell(CellIndex.indexByString("e2")).value = 'OFICIO No. CC/031/2021';
-    sheetObject.cell(CellIndex.indexByString("e3")).value = 'ASUNTO: Carta de terminación de Servicio Social';
+    sheetObject.cell(CellIndex.indexByString("e3")).value = 'ASUNTO: ACEPTACIÓN DEL SERVICIO SOCIAL';
     sheetObject.cell(CellIndex.indexByString("a4")).value ='M.C. ANA MÉNDEZ ZAZUETA';
     sheetObject.cell(CellIndex.indexByString("f5")).value = 'AT’N: M.A. EDGARCOTA VALENZUELA';
     sheetObject.cell(CellIndex.indexByString("f6")).value = 'JEFE DEL DEPARTAMENTO DE ';
